@@ -163,9 +163,10 @@
 
                                 <!-- CTA -->
                                 <div class="cta-buttons">
-                                    <a href="#" class="btn btn-buy">
-                                         Buy Now
-                                    </a>
+                                    <a href="{% url 'checkout' %}?buy_now={{ product.id }}" class="btn btn-buy">
+    Buy Now
+</a>
+
 
                                     <a href="{% url 'cart' %}?product_id={{ product.id }}" class="btn btn-cart">
                                          Add to Cart

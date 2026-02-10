@@ -37,7 +37,18 @@ urlpatterns = [
     path('Courses',views.courses),
     path('Tools',views.tools),
     path('Contact',views.contact, name = "contact"),
-    path('Cart',views.cart, name = "cart"),
+    path('cart/', views.cart, name="cart"),
+    path("checkout/", views.checkout, name="checkout"),
+    path("create-order/", views.create_order, name="create_order"),
+
+    # 💳 Payment
+    path("payment/<int:order_id>/", views.payment, name="payment"),
+    path("payment-pending/<int:order_id>/", views.payment_pending, name="payment_pending"),
+
+    # 📥 Downloads
+    path("my-downloads/", views.my_downloads, name="my_downloads"),
+    path("download/<int:product_id>/", views.download_product, name="download_product"),
+    path("download-zip/", views.download_zip, name="download_zip"),
     path('client_Signup',views.client_signup, name = "client_signup"),
     path('client_Signout/', views.client_signout, name='client_signout'),
     path('client_activate/<uidb64>/<token>', views.client_activate, name='client_activate'),
@@ -46,6 +57,7 @@ urlpatterns = [
         serve,
         {"document_root": settings.DEMO_ROOT},
     ),
+
 ]
 
 if settings.DEBUG:

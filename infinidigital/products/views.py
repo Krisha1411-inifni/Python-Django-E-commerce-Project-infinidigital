@@ -1,25 +1,23 @@
-from email import message_from_bytes
+import io
+import os
+import zipfile
 
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
+from django.http import HttpResponseForbidden, FileResponse, HttpResponse
 from django.utils.encoding import force_str, force_bytes
 from django.contrib.sites.shortcuts import get_current_site
-from base64 import urlsafe_b64decode
 from django.core.mail import EmailMessage, send_mail
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.conf import settings
 
-from .models import Product, Cart, ClientUser
+from .models import Product, Cart, ClientUser, OrderItem, Order, Category
 from .tokens import generate_token
-
 
 # Create your views here.
 
 def index(request):
-    return render(request,'index.html')
+    categorys = Category.objects.all()
+    return render(request,'index.html',{"categorys" : categorys})
 
 def topic_detail(request,id):
     product = Product.objects.get(id = id)
@@ -62,19 +60,33 @@ from .models import Cart, Product
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404, render
 
+
+def has_purchased(client, product):
+    return  OrderItem.objects.filter(
+        order__client=client,
+        order__is_paid=True,
+        order__is_verified=True,
+        product=product
+    ).exists()
+
 def cart(request):
     client_user_id = request.session.get('client_user_id')
 
     if not client_user_id:
-        messages.warning(request, "Please signin first to add products to your cart.")
-        return redirect('client_signup')   # your login URL name
+        messages.warning(request, "Please sign in first to add products to your cart.")
+        return redirect('client_signup')
 
     client_user = get_object_or_404(ClientUser, id=client_user_id)
 
     product_id = request.GET.get('product_id')
 
+    # 🟢 ONLY run this block if product_id exists
     if product_id:
         product = get_object_or_404(Product, id=product_id)
+
+        if has_purchased(client_user, product):
+            messages.info(request, "You already own this product. Check My Downloads.")
+            return redirect("my_downloads")
 
         cart_item, created = Cart.objects.get_or_create(
             user=client_user,
@@ -88,15 +100,223 @@ def cart(request):
 
         return redirect('cart')
 
-    cart_items = Cart.objects.filter(user=client_user)
-    cart_total = 0
-    for item in cart_items:
-        cart_total += item.product.ProductDiscountPrice
+    # 🟢 Normal cart view
+    cart_items = Cart.objects.filter(user=client_user).select_related("product")
+
+    cart_total = sum(item.product.ProductDiscountPrice for item in cart_items)
 
     return render(request, 'cart.html', {
         'cart_items': cart_items,
         'cart_total': cart_total
     })
+
+def checkout(request):
+    client_user_id = request.session.get('client_user_id')
+
+    if not client_user_id:
+        messages.warning(request, "Please sign in first.")
+        return redirect('client_signup')
+
+    client_user = get_object_or_404(ClientUser, id=client_user_id)
+
+    buy_now_product_id = request.GET.get('buy_now')
+
+    items = []
+    total = 0
+
+    # 🟢 BUY NOW FLOW
+    if buy_now_product_id:
+        product = get_object_or_404(Product, id=buy_now_product_id)
+
+        if has_purchased(client_user, product):
+            messages.info(request, "You already purchased this product.")
+            return redirect("my_downloads")
+
+        items.append({
+            "product": product,
+            "price": product.ProductDiscountPrice
+        })
+
+        total = product.ProductDiscountPrice
+
+        request.session['checkout_mode'] = 'buy_now'
+        request.session['buy_now_product_id'] = product.id
+
+    # 🟢 CART FLOW
+    else:
+        cart_items = Cart.objects.filter(user=client_user)
+
+        if not cart_items.exists():
+            messages.warning(request, "Your cart is empty.")
+            return redirect('cart')
+
+        for item in cart_items:
+            items.append({
+                "product": item.product,
+                "price": item.product.ProductDiscountPrice
+            })
+            total += item.product.ProductDiscountPrice
+
+        request.session['checkout_mode'] = 'cart'
+
+    return render(request, 'checkout.html', {
+        "items": items,
+        "total": total,
+        "client_user": client_user
+    })
+
+def create_order(request):
+    client_user_id = request.session.get('client_user_id')
+
+    if not client_user_id or request.method != "POST":
+        return redirect('cart')
+
+    client_user = get_object_or_404(ClientUser, id=client_user_id)
+
+    mode = request.session.get('checkout_mode')
+
+    order = Order.objects.create(
+        client=client_user,
+        total_amount=0,
+        is_paid=False
+    )
+
+    total = 0
+
+    if mode == 'buy_now':
+        product_id = request.session.get('buy_now_product_id')
+        product = get_object_or_404(Product, id=product_id)
+
+        OrderItem.objects.create(
+            order=order,
+            product=product,
+            price=product.ProductDiscountPrice
+        )
+
+        total = product.ProductDiscountPrice
+
+    elif mode == 'cart':
+        cart_items = Cart.objects.filter(user=client_user)
+
+        for item in cart_items:
+            OrderItem.objects.create(
+                order=order,
+                product=item.product,
+                price=item.product.ProductDiscountPrice
+            )
+
+            total += item.product.ProductDiscountPrice
+        cart_items.delete()
+
+    order.total_amount = total
+    order.save()
+    return redirect('payment', order_id=order.id)
+
+def payment(request, order_id):
+    client_user_id = request.session.get('client_user_id')
+    if not client_user_id:
+        return redirect('client_signup')
+    client = get_object_or_404(ClientUser, id=client_user_id)
+    order = get_object_or_404(
+        Order,
+        id=order_id,
+        client=client,
+        is_paid=False
+    )
+
+    if request.method == "POST":
+        payment_id = request.POST.get("payment_id")
+        order.payment_id = payment_id
+        order.payment_provider = "upi"
+        order.is_paid = True
+        order.save()
+        return redirect("payment_pending", order_id=order.id)
+    return render(request, "payment.html", {"order": order})
+
+def payment_pending(request, order_id):
+    client_user_id = request.session.get('client_user_id')
+    if not client_user_id:
+        return redirect('client_signup')
+    client = get_object_or_404(ClientUser, id=client_user_id)
+    order = get_object_or_404(
+        Order,
+        id=order_id,
+        client=client
+    )
+
+    return render(request, "payment_pending.html", { "order": order })
+
+
+def download_product(request, product_id):
+    client_user_id = request.session.get('client_user_id')
+
+    if not client_user_id:
+        messages.warning(request, "Please sign in first.")
+        return redirect('client_signup')
+
+    client = get_object_or_404(ClientUser, id=client_user_id)
+
+    has_access = OrderItem.objects.filter(
+        order__client=client,
+        order__is_paid=True,
+        order__is_verified=True,
+        product_id=product_id
+    ).exists()
+
+    if not has_access:
+        return HttpResponseForbidden("You have not purchased this product.")
+
+    product = get_object_or_404(Product, id=product_id)
+
+    # ✅ success message (will show on next page)
+    messages.success(request, "Download started successfully ✅")
+
+    return FileResponse(
+        product.ProductFile.open("rb"),
+        as_attachment=True,
+        filename=os.path.basename(product.ProductFile.name)
+    )
+
+
+def download_zip(request):
+    client_user_id = request.session.get("client_user_id")
+
+    if not client_user_id:
+        messages.warning(request, "Please sign in first.")
+        return redirect("client_signup")
+
+    client = get_object_or_404(ClientUser, id=client_user_id)
+    purchased_items = OrderItem.objects.filter( order__client=client, order__is_paid=True, order__is_verified=True ).select_related("product")
+    if not purchased_items.exists():
+        return HttpResponseForbidden("No purchased products.")
+
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
+        for item in purchased_items:
+            product = item.product
+            file_path = product.ProductFile.path
+            file_name = os.path.basename(product.ProductFile.name)
+            zip_file.write(file_path, arcname=file_name)
+    buffer.seek(0)
+    response = HttpResponse(buffer, content_type="application/zip")
+    response["Content-Disposition"] = 'attachment; filename="my_purchases.zip"'
+    return response
+
+def my_downloads(request):
+    client_user_id = request.session.get("client_user_id")
+
+    if not client_user_id:
+        messages.warning(request, "Please sign in first.")
+        return redirect("client_signup")
+
+    client = get_object_or_404(ClientUser, id=client_user_id)
+
+    purchased_items = OrderItem.objects.filter(
+        order__client=client,
+        order__is_paid=True,
+        order__is_verified=True
+    ).select_related("product", "order")
+    return render(request, "my_downloads.html", { "purchased_items": purchased_items })
 
 def client_signup(request):
     if request.method == 'POST':

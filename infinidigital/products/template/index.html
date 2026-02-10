@@ -223,55 +223,22 @@
                     </div>
                 </div>
                 <section class="showcase" id="showcase">
-                    {% for category in categorys %}
                     <div class="hexagon-container">
+                        {% for category in categorys %}
+
                         <div class="hexagon">
                             <a href="/PDFs">
                                 <div class="hexagon-inner glass">
                                     <div class="hexagon-icon"><i class="bi bi-file-richtext"></i></div>
-                                    <h4>{{ category.CategoryName }}S</h4>
+                                    <h4>{{ category.CategoryName }}</h4>
                                     <p>{{ category.CategoryDescription }}</p>
                                     <p class="cat">View Templates →</p>
                                 </div>
                             </a>
                         </div>
-                        <div class="hexagon">
-                            <div class="hexagon-inner glass">
-                                <div class="hexagon-icon">🛡️</div>
-                                <h4>Quantum Security</h4>
-                                <p>Unbreakable encryption protocols</p>
-                            </div>
-                        </div>
-                        <div class="hexagon">
-                            <div class="hexagon-inner glass">
-                                <div class="hexagon-icon">🚀</div>
-                                <h4>Warp Navigation</h4>
-                                <p>Instant travel between data nodes</p>
-                            </div>
-                        </div>
-                        <div class="hexagon">
-                            <div class="hexagon-inner glass">
-                                <div class="hexagon-icon">💎</div>
-                                <h4>Crystal Storage</h4>
-                                <p>Infinite capacity data crystals</p>
-                            </div>
-                        </div>
-                        <div class="hexagon">
-                            <div class="hexagon-inner glass">
-                                <div class="hexagon-icon">🎯</div>
-                                <h4>Neural Targeting</h4>
-                                <p>Thought-based interaction systems</p>
-                            </div>
-                        </div>
-                        <div class="hexagon">
-                            <div class="hexagon-inner glass">
-                                <div class="hexagon-icon">⭐</div>
-                                <h4>Stellar Network</h4>
-                                <p>Galactic-scale connectivity matrix</p>
-                            </div>
-                        </div>
+                        {% endfor %}
+
                     </div>
-                    {% endfor %}
                 </section>
 
                 <div class="container-fluid">

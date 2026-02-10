@@ -61,7 +61,16 @@
             <!-- Product Row -->
             <div class="row align-items-center py-4 text-center bg-dark border-bottom border-secondary p-4">
                 <div class="col-md-2 d-flex align-items-center justify-content-center">
-                    <img src="{{ item.product.ProductImage1.url }}" width="80" class="rounded thumbnail">
+                        {% if item.product.ProductImage1 %}
+  <img class="img-thumbnail w-25 h-50"
+       src="{{ item.product.ProductImage1.url }}"
+       alt="{{ item.product.ProductName }}">
+{% else %}
+  <img class="img-thumbnail w-25 h-50"
+       src="{% static 'images/no-image.png' %}"
+       alt="No image">
+{% endif %}
+
                 </div>
 
                 <div class="col-md-4 d-flex align-items-center justify-content-center">
@@ -86,7 +95,9 @@
                 <!-- Cart Total -->
         <div class="text-end mt-4">
             <h5 class="text-white">Cart Total: ₹<span id="finalTotal">{{ cart_total }}</span></h5>
-            <a href="{% url 'Checkout' %}?add_to_cart={{ cart_items.id }}" class="btn btn-success mt-3 px-4">Proceed to Checkout</a>
+            <a href="{% url 'checkout' %}" class="btn btn-success mt-3 px-4">
+    Proceed to Checkout
+</a>
         </div>
         {% else %}
          <div class="alert alert-info text-center">
