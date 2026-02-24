@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Template | InfiniDigital</title>    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexaVerse - Digital Excellence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/templatemo-nexaverse.css' %}">
+</head>
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader-infinity">
+            <svg viewBox="0 0 400 200">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#13547a"/>
+                        <stop offset="100%" stop-color="#80d0c7"/>
+                    </linearGradient>
+                </defs>
+                <path d="M80,100
+                         C80,40 180,40 200,100
+                         C220,160 320,160 320,100
+                         C320,40 220,40 200,100
+                         C180,160 80,160 80,100 Z"
+                      stroke="url(#gradient)"
+                      stroke-width="10"
+                      stroke-linecap="round"
+                      fill="none"/>
+            </svg>
+        </div>
+        <div class="loading-text">InfiniDigital...</div>
+    </div>
+<div class="content-section" id="gallery">
+                <div class="top-bar">
+                    <div class="section-header-small">
+                        <div class="small-logo">
+                            <img style="height:25px; width:40px;" src="{% static 'images/logo3.png' %}">
+                        </div>
+                        <div class="small-brand">
+                            <h3>InfiniDigital</h3>
+                        </div>
+                    </div>
+                    <form action="{% url 'search' %}" method="GET" class="premium-search">
+                        <div class="search-wrapper">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text"
+                                   name="q"
+                                   placeholder="Search templates, e-books, UI kits..."
+                                   value="{{ request.GET.q }}"
+                                   required>
+                            <kbd class="search-shortcut">/</kbd>
+                        </div>
+                    </form>
+                    <a class="back-btn" href="/OurServices">← Back to Menu</a>
+                </div>
+
+                <div class="section-header">
+                    <h2 class="section-title">Our Portfolio</h2>
+                    <p class="section-subtitle">Explore our latest works</p>
+                </div>
+
+
+        <div class="search-header text-center">
+            <h2>
+                Results for "<span>{{ query }}</span>"
+            </h2>
+            <p>{{ products|length }} products found</p>
+        </div>
+
+                        <!-- Content Sections -->
+            {% if products %}
+            <div class="gallery-grid">
+            {% for product in products %}
+            <div class="product-card">
+
+                <!-- Image Section -->
+                <a href="{% url 'topic_detail' product.id %}" class="product-image">
+                    {% if product.ProductImage1 %}
+                        <img src="{{ product.ProductImage1.url }}" alt="{{ product.ProductName }}">
+                    {% endif %}
+                    <span class="product-badge">
+                        {{ product.CategoryId.CategoryName }}
+                    </span>
+                </a>
+
+                <!-- Content Section -->
+                <div class="product-content">
+
+                    <h3 class="product-title">
+                        <a href="{% url 'topic_detail' product.id %}">
+                            {{ product.ProductName }}
+                        </a>
+                    </h3>
+
+                    <p class="product-description">
+                        {{ product.ShortDescription }}
+                    </p>
+
+                    <div class="product-footer">
+                        <div class="price">
+                            <span class="old-price">₹{{ product.ProductPrice }}</span>
+                            <span class="new-price">₹{{ product.ProductDiscountPrice }}</span>
+                        </div>
+
+                        <div class="actions">
+                            <button class="btn-cart">
+                                <i class="bi bi-bag"></i>
+                            </button>
+                            <a href="{% url 'topic_detail' product.id %}" class="btn-buy">
+                                Buy Now
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+    <div class="no-results">
+                <h4>No products found</h4>
+                <p>Try searching something else.</p>
+            </div>
+        {% endif %}
+
+            </div>
+        <footer class="footer" id="mainFooter">
+            <p>© 2026 NexaVerse. Crafted with passion. Design by <a href="https://templatemo.com" target="_blank">TemplateMo</a></p>
+        </footer>
+<script src="{% static 'js/templatemo-nexa-scripts.js' %}"></script>
+
+</body>
+</html>

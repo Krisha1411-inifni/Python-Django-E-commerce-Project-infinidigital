@@ -18,8 +18,8 @@
         <svg viewBox="0 0 400 200">
             <defs>
                 <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#13547a"/>
-                    <stop offset="100%" stop-color="#80d0c7"/>
+                    <stop offset="0%" stop-color="#5a3eea"/>
+                    <stop offset="100%" stop-color="#8b6cff"/>
                 </linearGradient>
             </defs>
             <path d="M80,100
@@ -227,9 +227,38 @@
                         {% for category in categorys %}
 
                         <div class="hexagon">
-                            <a href="/PDFs">
+                            {% if category.CategoryName == "Template" %}
+                                <a href="{% url 'template' %}">
+                            {% elif category.CategoryName == "E-Books" %}
+                                <a href="{% url 'ebooks' %}">
+                            {% elif category.CategoryName == "PDFs" %}
+                                <a href="{% url 'pdfs' %}">
+                            {% elif category.CategoryName == "Source Code / Projects" %}
+                                <a href="{% url 'sourcecode' %}">
+                            {% elif category.CategoryName == "Courses & Tutorials" %}
+                                <a href="{% url 'courses' %}">
+                            {% elif category.CategoryName == "Tools & Resources" %}
+                                <a href="{% url 'tools' %}">
+                            {% endif %}
                                 <div class="hexagon-inner glass">
-                                    <div class="hexagon-icon"><i class="bi bi-file-richtext"></i></div>
+                                    {% if category.CategoryName == "Template" %}
+                                    <div class="hexagon-icon"><i class="bi bi-file-earmark-richtext-fill"></i></div>
+                                    {% endif %}
+                                    {% if category.CategoryName == "E-Books" %}
+                                    <div class="hexagon-icon"><i class="bi bi-book-fill"></i></div>
+                                    {% endif %}
+                                    {% if category.CategoryName == "PDFs" %}
+                                    <div class="hexagon-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+                                    {% endif %}
+                                    {% if category.CategoryName == "Source Code / Projects" %}
+                                    <div class="hexagon-icon"><i class="bi bi-file-code-fill"></i></div>
+                                    {% endif %}
+                                    {% if category.CategoryName == "Courses & Tutorials" %}
+                                    <div class="hexagon-icon"><i class="bi bi-mortarboard-fill"></i></div>
+                                    {% endif %}
+                                    {% if category.CategoryName == "Tools & Resources" %}
+                                    <div class="hexagon-icon"><i class="bi bi-tools"></i></div>
+                                    {% endif %}
                                     <h4>{{ category.CategoryName }}</h4>
                                     <p>{{ category.CategoryDescription }}</p>
                                     <p class="cat">View Templates →</p>

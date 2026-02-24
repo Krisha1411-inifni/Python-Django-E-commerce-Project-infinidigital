@@ -1,25 +1,32 @@
-<!doctype html>
-{% include 'header.html' %}
 {% load static %}
+
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="description" content="{{ product.ShortDescription }}">
+        <meta property="og:title" content="{{ product.ProductName }}">
+        <meta property="og:description" content="{{ product.ShortDescription }}">
+        {% if product.ProductImage1 %}
+        <meta property="og:image" content="{{ product.ProductImage1.url }}">
+        {% endif %}
+        <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
-        <title>Topic Detail Page</title>
+        <title>{{ product.ProductName }} | InfiniDigital</title>
     </head>
 
     <body id="top">
+    {% include 'header.html' %}
+
 <div class="loading-screen" id="loadingScreen">
     <div class="loader-infinity">
         <svg viewBox="0 0 400 200">
             <defs>
                 <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#13547a"/>
-                    <stop offset="100%" stop-color="#80d0c7"/>
+                    <stop offset="0%" stop-color="#5a3eea"/>
+                    <stop offset="100%" stop-color="#8b6cff"/>
                 </linearGradient>
             </defs>
             <path d="M80,100
@@ -46,7 +53,9 @@
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="/">Homepage</a></li>
 
-                                    <li class="breadcrumb-item active" aria-current="page">Web Design</li>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        {{ product.CategoryId.CategoryName }}
+                                    </li>
                                 </ol>
                             </nav>
 
@@ -60,11 +69,12 @@
                         </div>
 
                         <div class="col-lg-4 col-12 ">
-                            <div class="topics-detail-block bg-white shadow-lg rounded">
-                                <img src="{{ product.ProductImage1.url }}" class="topics-detail-block-image img-fluid rounded">
+                            <div class="topics-detail-block text-center rounded">
+                                {% if product.ProductImage1%}
+                                    <img src="{{ product.ProductImage1.url }}" class="topics-detail-block-image img-fluid rounded">
+                                {% endif %}
                             </div>
                         </div>
-
                     </div>
                 </div>
             </header>
@@ -73,18 +83,6 @@
             <section class="product-detail section-padding" id="product-detail">
                 <div class="container">
 
-                    <!-- PRODUCT HEADER -->
-                    <div class="row mb-5">
-                        <div class="col-lg-10 mx-auto text-center">
-                            <h1 class="product-title text-white">
-                                {{ product.ProductName }}
-                            </h1>
-                            <p class="product-subtitle">
-                                {{ product.ShortDescription }}
-                            </p>
-                        </div>
-                    </div>
-
                     <!-- MAIN PRODUCT AREA -->
                     <div class="row align-items-start">
 
@@ -92,16 +90,22 @@
                         <div class="col-lg-6 mb-4">
 
                             <!-- MAIN SLIDER -->
-                            <div id="productMainSlider" class="carousel slide mb-3" data-bs-ride="false" data-bs-interval="4000">
+                            <div id="productMainSlider" class="carousel slide mb-3" >
                                 <div class="carousel-inner">
                                     <div class="carousel-item active" id="slide-0">
-                                        <img src="{{ product.ProductImage1.url }}" class="product-main-image">
+                                        {% if product.ProductImage1 %}
+                                            <img src="{{ product.ProductImage1.url }}" class="product-main-image">
+                                        {% endif %}
                                     </div>
                                     <div class="carousel-item" id="slide-1">
-                                        <img src="{{ product.ProductImage2.url }}" class="product-main-image">
+                                        {% if product.ProductImage2 %}
+                                            <img src="{{ product.ProductImage2.url }}" class="product-main-image">
+                                        {% endif %}
                                     </div>
                                     <div class="carousel-item" id="slide-2">
-                                        <img src="{{ product.ProductImage3.url }}" class="product-main-image">
+                                        {% if product.ProductImage3 %}
+                                            <img src="{{ product.ProductImage3.url }}" class="product-main-image">
+                                        {% endif %}
                                     </div>
                                 </div>
 
@@ -116,14 +120,18 @@
 
                             <!-- THUMBNAILS -->
                             <div class="product-thumbnails d-flex justify-content-center gap-3">
-                                <img src="{{ product.ProductImage1.url }}" class="thumbnail active"
-                                     data-bs-target="#productMainSlider" data-bs-slide-to="0">
-
-                                <img src="{{ product.ProductImage2.url }}" class="thumbnail"
-                                     data-bs-target="#productMainSlider" data-bs-slide-to="1">
-
-                                <img src="{{ product.ProductImage3.url }}" class="thumbnail"
-                                     data-bs-target="#productMainSlider" data-bs-slide-to="2">
+                                {% if product.ProductImage1 %}
+                                    <img src="{{ product.ProductImage1.url }}" class="thumbnail active"
+                                         data-bs-target="#productMainSlider" data-bs-slide-to="0">
+                                {% endif %}
+                                {% if product.ProductImage2 %}
+                                    <img src="{{ product.ProductImage2.url }}" class="thumbnail"
+                                         data-bs-target="#productMainSlider" data-bs-slide-to="1">
+                                {% endif %}
+                                {% if product.ProductImage3 %}
+                                    <img src="{{ product.ProductImage3.url }}" class="thumbnail"
+                                         data-bs-target="#productMainSlider" data-bs-slide-to="2">
+                                {% endif %}
                             </div>
 
                         </div>
@@ -133,40 +141,70 @@
 
                             <div class="product-info-card">
 
+                                <div class="rating-section">
+                                    <span class="stars">★★★★★</span>
+                                    <span class="rating-text">4.9 (137 verified buyers)</span>
+                                </div>
+
                                 <!-- Price -->
                                 <div class="price-section">
-                                    <span class="old-price">
-                                        ₹{{ product.ProductPrice }}
-                                    </span>
-                                    <span class="new-price">
-                                        ₹{{ product.ProductDiscountPrice }}
-                                    </span>
-                                </div>
-                                {% if product.CategoryId.CategoryName == "TEMPLATE" %}
-                                    <ul class="product-highlights">
-                                    <li>✔ Quality checked by InfiniDigital Team</li>
-                                    <li>✔ 6 months technical support</li>
-                                    <li>✔ 1 year of free updates</li>
-                                    <li>✔ 100% money back guarantee</li>
-                                </ul>
+
+                                {% if product.ProductDiscountPrice and product.ProductDiscountPrice < product.ProductPrice %}
+                                    <div class="price-wrapper">
+                                        <span class="new-price">₹{{ product.ProductDiscountPrice }}</span>
+                                        <span class="old-price">₹{{ product.ProductPrice }}</span>
+                                        <span class="discount-pill">
+                                            Save {{ product.discount_percent }}%
+                                        </span>
+                                    </div>
+                                {% else %}
+                                    <span class="new-price">₹{{ product.ProductPrice }}</span>
                                 {% endif %}
 
-                                {% if product.CategoryId.CategoryName != "TEMPLATE" %}
+                            </div>
+
+                            <div class="micro-trust">
+                                <span>✔ Instant digital download after verification</span>
+                                <span>✔ Secure checkout</span>
+                                <span>✔ Lifetime access</span>
+                            </div>
+                                <div class="deliverables-box">
+                                    <h5>What You'll Get</h5>
+                                    <ul>
+                                        <li>✔ High-quality PDF file</li>
+                                        <li>✔ Editable source files</li>
+                                        <li>✔ Bonus resources</li>
+                                        <li>✔ Lifetime updates</li>
+                                    </ul>
+                                </div>
+
+
+                                {% if product.CategoryId.CategoryName == "Template" %}
+                                    <ul class="product-highlights">
+                                        <li>✔ Secure purchase with admin verification</li>
+                                        <li>✔ Clean, organized & editable files</li>
+                                        <li>✔ Compatible with industry-standard tools</li>
+                                        <li>✔ High-quality, professionally designed layout</li>
+                                        <li>✔ Lifetime access after approval</li>
+                                    </ul>
+                                {% endif %}
+
+                                {% if product.CategoryId.CategoryName == "E-Books" %}
                                 <!-- Highlights -->
                                 <ul class="product-highlights">
-                                    <li>✔ Lifetime access</li>
-                                    <li>✔ Beginner friendly</li>
-                                    <li>✔ Certificate included</li>
-                                    <li>✔ 30-day money-back guarantee</li>
+                                    <li>✔ Verified purchase for protected content</li>
+                                    <li>✔ Structured chapters for step-by-step learning</li>
+                                    <li>✔ Real-world examples & strategies</li>
+                                    <li>✔ Self-paced learning experience</li>
+                                    <li>✔ Free updates included</li>
                                 </ul>
                                 {% endif %}
 
                                 <!-- CTA -->
                                 <div class="cta-buttons">
                                     <a href="{% url 'checkout' %}?buy_now={{ product.id }}" class="btn btn-buy">
-    Buy Now
-</a>
-
+                                        Buy Now
+                                    </a>
 
                                     <a href="{% url 'cart' %}?product_id={{ product.id }}" class="btn btn-cart">
                                          Add to Cart
@@ -179,9 +217,21 @@
                                          Live Preview <i class="bi bi-box-arrow-up-right"></i>
                                     </a>
                                     {% endif %}
+
+                                    {% if product.PreviewFile %}
+                                        <a href="{{ product.PreviewFile.url }}"
+                                           target="_blank"
+                                           class="btn btn-demo">
+                                            See Preview<i class="bi bi-box-arrow-up-right"></i>
+                                        </a>
+                                    {% endif %}
+                                    <div class="secure-note">
+                                    <div>🔒 Secure Payment via Razorpay / Stripe</div>
+                                    <div>⚡ Instant Access After Verification</div>
+                                    <div>📩 Download Link Sent to Email</div>
                                 </div>
 
-
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -189,12 +239,20 @@
                     <!-- PRODUCT DESCRIPTION -->
                     <div class="row mt-5">
                         <div class="col-lg-10 mx-auto">
-                            <h3 class="section-title text-white mb-3">
+                            <h3 class="section-title mb-3" style="color: #8b6cff;">
                                 Product Description
                             </h3>
                             <p class="product-description">
-                                {{ product.LongDescription }}
+                                {{ product.LongDescription|safe }}
                             </p>
+                            <section class="testimonial-strip">
+                                <h4 class="text-white">What Buyers Are Saying</h4>
+                                <div class="testimonial">
+                                    <p>"Extremely professional and well structured. Worth every rupee."</p>
+                                    <span>— Verified Buyer</span>
+                                </div>
+                            </section>
+
                         </div>
                     </div>
                 </div>
@@ -231,9 +289,11 @@
         <script>
         const carouselEl = document.getElementById('productMainSlider');
         const carousel = new bootstrap.Carousel(carouselEl, {
-          interval: 4000,  // 4 seconds
-          ride: 'carousel' // start automatically
-        });
+              interval: false,
+              ride: false,
+              pause: true
+            });
+
         </script>
     </body>
 </html>

@@ -10,6 +10,28 @@
 <body>
 
 {% include "header.html" %}
+<div class="loading-screen" id="loadingScreen">
+        <div class="loader-infinity">
+            <svg viewBox="0 0 400 200">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#5a3eea"/>
+                        <stop offset="100%" stop-color="#8b6cff"/>
+                    </linearGradient>
+                </defs>
+                <path d="M80,100
+                         C80,40 180,40 200,100
+                         C220,160 320,160 320,100
+                         C320,40 220,40 200,100
+                         C180,160 80,160 80,100 Z"
+                      stroke="url(#gradient)"
+                      stroke-width="10"
+                      stroke-linecap="round"
+                      fill="none"/>
+            </svg>
+        </div>
+        <div class="loading-text">InfiniDigital...</div>
+    </div>
 <header class="site-header d-flex flex-column justify-content-center align-items-center">
                 <div class="container">
                     <div class="row align-items-center">
@@ -32,25 +54,39 @@
 
 
 
-<div class="container py-5 text-center">
-  <div class="card shadow p-5">
+<section class="pending-area">
+  <div class="container py-5 text-center">
 
-    <p class="mt-3">
-      Order ID: <strong>#{{ order.id }}</strong><br>
-      Amount: ₹{{ order.total_amount }}
-    </p>
+    <div class="pending-card">
 
-    <span class="badge bg-warning">Under Verification</span>
+      <div class="status-icon mb-4">
+        ⏳
+      </div>
 
-    <div class="alert alert-info mt-4">
-      Verification usually takes 1–24 hours.
+      <h3 class="mb-3">Payment Under Verification</h3>
+
+      <p class="order-info">
+        Order ID: <strong>#{{ order.id }}</strong><br>
+        Amount Paid: <strong>₹{{ order.total_amount }}</strong>
+      </p>
+
+      <div class="status-badge">
+        Under Review
+      </div>
+
+      <div class="info-box mt-4">
+        Verification usually takes <strong>1–24 hours</strong>.<br>
+        You will receive access once confirmed.
+      </div>
+
+      <a href="{% url 'my_downloads' %}" class="btn pending-btn mt-4">
+        View My Downloads
+      </a>
+
     </div>
 
-    <a href="{% url 'my_downloads' %}" class="btn btn-primary mt-3">
-      View My Downloads
-    </a>
   </div>
-</div>
+</section>
 
 {% include "footer.html" %}
 

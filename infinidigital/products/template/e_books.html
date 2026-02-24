@@ -3,207 +3,118 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>E-Books</title>
-    <meta charset="UTF-8">
+    <title>E-Books | InfiniDigital</title>    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NexaVerse - Digital Excellence</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
+
     <link rel="stylesheet" href="{% static 'css/templatemo-nexaverse.css' %}">
 </head>
 <body>
-<div class="loading-screen" id="loadingScreen">
-    <div class="loader-infinity">
-        <svg viewBox="0 0 400 200">
-            <defs>
-                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#13547a"/>
-                    <stop offset="100%" stop-color="#80d0c7"/>
-                </linearGradient>
-            </defs>
-            <path d="M80,100
-                     C80,40 180,40 200,100
-                     C220,160 320,160 320,100
-                     C320,40 220,40 200,100
-                     C180,160 80,160 80,100 Z"
-                  stroke="url(#gradient)"
-                  stroke-width="10"
-                  stroke-linecap="round"
-                  fill="none"/>
-        </svg>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader-infinity">
+            <svg viewBox="0 0 400 200">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#5a3eea"/>
+                        <stop offset="100%" stop-color="#8b6cff"/>
+                    </linearGradient>
+                </defs>
+                <path d="M80,100
+                         C80,40 180,40 200,100
+                         C220,160 320,160 320,100
+                         C320,40 220,40 200,100
+                         C180,160 80,160 80,100 Z"
+                      stroke="url(#gradient)"
+                      stroke-width="10"
+                      stroke-linecap="round"
+                      fill="none"/>
+            </svg>
+        </div>
+        <div class="loading-text">InfiniDigital...</div>
     </div>
-    <div class="loading-text">InfiniDigital...</div>
-</div>
-
-<div class="content-section" id="services">
-                <div class="section-header-small">
-                    <div class="small-logo">
-                        <img style="height:25px; width:40px;" src="{% static 'images/logo3.png' %}">
+            <div class="content-section" id="gallery">
+                <div class="top-bar">
+                    <div class="section-header-small">
+                        <div class="small-logo">
+                            <img style="height:25px; width:40px;" src="{% static 'images/logo3.png' %}">
+                        </div>
+                        <div class="small-brand">
+                            <h3>InfiniDigital</h3>
+                        </div>
                     </div>
-                    <div class="small-brand">
-                        <h3>InfiniDigital</h3>
-                    </div>
+                    <form action="{% url 'search' %}" method="GET" class="premium-search">
+                        <div class="search-wrapper">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text"
+                                   name="q"
+                                   placeholder="Search templates, e-books, UI kits..."
+                                   value="{{ request.GET.q }}"
+                                   required>
+                            <kbd class="search-shortcut">/</kbd>
+                        </div>
+                    </form>
+                    <a class="back-btn" href="/OurServices">← Back to Menu</a>
                 </div>
-                <a class="back-btn" href="/OurServices">← Back to Menu</a>
 
-                <div class="section-header">
-                    <h2 class="section-title">Our Services</h2>
-                    <p class="section-subtitle">Comprehensive solutions for the digital age</p>
-                </div>
-
-                <div class="tabs-container">
-                    <div class="tab-buttons">
-                        <button class="tab-btn active" onclick="switchTab(this, 'development')">Development</button>
-                        <button class="tab-btn" onclick="switchTab(this, 'design')">Design</button>
-                        <button class="tab-btn" onclick="switchTab(this, 'consulting')">Consulting</button>
-                        <button class="tab-btn" onclick="switchTab(this, 'support')">Support</button>
+                    <div class="section-header">
+                        <h2 class="section-title">Our Portfolio</h2>
+                        <p class="section-subtitle">Explore our latest works</p>
                     </div>
 
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="development">
-                            <div class="services-list">
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="{% static 'images/ai-optimized-templates.jpg' %}" alt="AI Development">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>AI Development</h4>
-                                        <p>Custom AI solutions powered by machine learning and neural networks for intelligent automation and predictive analytics.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="{% static 'images/coding-screen.jpg' %}" alt="Web Applications">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>Web Applications</h4>
-                                        <p>Responsive, scalable web apps built with modern frameworks like React, Vue, and Next.js for optimal performance.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="{% static 'images/ai-mobile-app.jpg' %}" alt="Mobile Apps">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>Mobile Apps</h4>
-                                        <p>Native and cross-platform mobile solutions for iOS and Android that deliver seamless user experiences.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                            </div>
+                        <!-- Content Sections -->
+            <div class="gallery-grid">
+            {% for product in products %}
+            <div class="product-card">
+
+                <!-- Image Section -->
+                <a href="{% url 'topic_detail' product.id %}" class="product-image">
+                    {% if product.ProductImage1 %}
+                        <img src="{{ product.ProductImage1.url }}" alt="{{ product.ProductName }}">
+                    {% endif %}
+                    <span class="product-badge">
+                        {{ product.CategoryId.CategoryName }}
+                    </span>
+                </a>
+
+                <!-- Content Section -->
+                <div class="product-content">
+
+                    <h3 class="product-title">
+                        <a href="{% url 'topic_detail' product.id %}">
+                            {{ product.ProductName }}
+                        </a>
+                    </h3>
+
+                    <p class="product-description">
+                        {{ product.ShortDescription }}
+                    </p>
+
+                    <div class="product-footer">
+                        <div class="price">
+                            <span class="old-price">₹{{ product.ProductPrice }}</span>
+                            <span class="new-price">₹{{ product.ProductDiscountPrice }}</span>
                         </div>
 
-                        <div class="tab-pane" id="design">
-                            <div class="services-list">
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="{% static 'images/design-screen.jpg' %}" alt="UX/UI Design">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>UX/UI Design</h4>
-                                        <p>Beautiful, intuitive interfaces that delight users and drive engagement through research-backed design principles.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="{% static 'images/brand-identity.jpg' %}" alt="Brand Identity">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>Brand Identity</h4>
-                                        <p>Complete brand packages including logos, typography, color systems, and comprehensive brand guidelines.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="{% static 'images/motion-design.jpg' %}" alt="Motion Design">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>Motion Design</h4>
-                                        <p>Engaging animations and interactive experiences that bring your digital products to life.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane" id="consulting">
-                            <div class="services-list">
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="{% static 'images/digital-strategy.jpg' %}" alt="Digital Strategy">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>Digital Strategy</h4>
-                                        <p>Strategic planning for digital transformation initiatives that align technology with business objectives.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="{% static 'images/tech-audit.jpg' %}" alt="Technology Audit">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>Technology Audit</h4>
-                                        <p>Comprehensive assessment of your tech infrastructure to identify opportunities and optimize performance.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="{% static 'images/process-optimized.jpg' %}" alt="Process Optimization">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>Process Optimization</h4>
-                                        <p>Streamline workflows with automation and best practices for maximum efficiency and productivity.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane" id="support">
-                            <div class="services-list">
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="{% static 'images/247-support.jpg' %}" alt="24/7 Support">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>24/7 Support</h4>
-                                        <p>Round-the-clock technical assistance and maintenance to keep your systems running smoothly.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="{% static 'images/training-center.jpg' %}" alt="Training">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>Training & Workshops</h4>
-                                        <p>Empower your team with expert-led training sessions tailored to your technology stack.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="{% static 'images/managed-service.jpg' %}" alt="Managed Services">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>Managed Services</h4>
-                                        <p>End-to-end management of your digital infrastructure for worry-free operations.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                            </div>
+                        <div class="actions">
+                            <button class="btn-cart">
+                                <a href="{% url 'cart' %}?product_id={{ product.id }}"><i class="bi bi-bag"></i></a>
+                            </button>
+                            <a href="{% url 'checkout' %}?buy_now={{ product.id }}" class="btn-buy">
+                                Buy Now
+                            </a>
                         </div>
                     </div>
+
                 </div>
             </div>
-<!-- Footer -->
+            {% endfor %}
+        </div>
+
+            </div>
         <footer class="footer" id="mainFooter">
             <p>© 2026 NexaVerse. Crafted with passion. Design by <a href="https://templatemo.com" target="_blank">TemplateMo</a></p>
         </footer>

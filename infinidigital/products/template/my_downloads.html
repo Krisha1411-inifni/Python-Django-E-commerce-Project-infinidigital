@@ -1,4 +1,26 @@
 {% include "header.html" %}
+<div class="loading-screen" id="loadingScreen">
+        <div class="loader-infinity">
+            <svg viewBox="0 0 400 200">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#5a3eea"/>
+                        <stop offset="100%" stop-color="#8b6cff"/>
+                    </linearGradient>
+                </defs>
+                <path d="M80,100
+                         C80,40 180,40 200,100
+                         C220,160 320,160 320,100
+                         C320,40 220,40 200,100
+                         C180,160 80,160 80,100 Z"
+                      stroke="url(#gradient)"
+                      stroke-width="10"
+                      stroke-linecap="round"
+                      fill="none"/>
+            </svg>
+        </div>
+        <div class="loading-text">InfiniDigital...</div>
+    </div>
 <header class="site-header d-flex flex-column justify-content-center align-items-center">
                 <div class="container">
                     <div class="row align-items-center">
@@ -22,49 +44,60 @@
 {% include "partials/checkout_progress.html" with step=4 %}
 
 
-<div class="container py-5">
-  <h2 class="mb-4 text-white">My Downloads</h2>
+<section class="downloads-area">
+  <div class="container py-5">
 
-  {% if purchased_items %}
-  <table class="table table-bordered text-white">
-    <thead class="table-dark">
-      <tr>
-        <th>Product</th>
-        <th>Order</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
+    <h3 class="section-title text-white mb-5">Your Digital Library</h3>
 
-    <tbody>
+    {% if purchased_items %}
+    <div class="row g-4">
+
       {% for item in purchased_items %}
-      <tr>
-        <td>{{ item.product.ProductName }}</td>
-        <td>#{{ item.order.id }}</td>
-        <td>
-          <span class="badge bg-success">Verified</span>
-        </td>
-        <td>
-          <a href="{% url 'download_product' item.product.id %}"
-             class="btn btn-success btn-sm">
-            Download
-          </a>
-        </td>
-      </tr>
+      <div class="col-lg-4 col-md-6">
+        <div class="download-card">
+
+          <div class="product-image">
+            <img src="{{ item.product.ProductImage1.url }}" alt="">
+          </div>
+
+          <div class="download-content text-white">
+            <h6>{{ item.product.ProductName }}</h6>
+
+            <div class="meta">
+              Order #{{ item.order.id }}
+            </div>
+
+            <span class="verified-badge">Verified</span>
+
+            <a href="{% url 'download_product' item.product.id %}"
+               class="btn download-btn w-100 mt-3 btn-primary-custom">
+              ⬇ Download
+            </a>
+          </div>
+
+        </div>
+      </div>
       {% endfor %}
-    </tbody>
-  </table>
 
-  <a href="{% url 'download_zip' %}" class="btn btn-primary mt-3">
-    Download All as ZIP
-  </a>
+    </div>
 
-  {% else %}
-  <div class="alert alert-warning text-center">
-    No purchases yet.
+    <div class="text-center mt-5">
+      <a href="{% url 'download_zip' %}" class="btn download-all-btn btn-primary-custom">
+        Download All as ZIP
+      </a>
+    </div>
+
+    {% else %}
+
+    <div class="empty-state text-center">
+      <div class="empty-icon">📂</div>
+      <h5>No Purchases Yet</h5>
+      <p>Your purchased digital products will appear here.</p>
+    </div>
+
+    {% endif %}
+
   </div>
-  {% endif %}
-</div>
-
+</section>
 
 {% include "footer.html" %}

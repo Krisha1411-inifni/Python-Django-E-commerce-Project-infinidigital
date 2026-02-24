@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.hashers import make_password, check_password
+from ckeditor.fields import RichTextField
+from django.utils.text import slugify
 
 
 # Create your models here.
@@ -31,11 +33,16 @@ class Product(models.Model):
     ProductPrice = models.FloatField()
     ProductDiscountPrice = models.FloatField()
     ShortDescription = models.TextField()
-    LongDescription = models.TextField()
+    LongDescription = RichTextField()
     ProductImage1 = models.ImageField(upload_to='products/productsimages/')
     ProductImage2 = models.ImageField(upload_to='products/productsimages/')
     ProductImage3 = models.ImageField(upload_to='products/productsimages/')
     ProductFile = models.FileField(upload_to='products/productsFile/')
+    PreviewFile = models.FileField(
+        upload_to='products/preview/',
+        blank=True,
+        null=True
+    )
     CreationDate = models.DateTimeField(auto_now_add=True)
     UpdationDate = models.DateTimeField(auto_now_add=True)
 

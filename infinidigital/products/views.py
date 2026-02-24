@@ -2,7 +2,8 @@ import io
 import os
 import zipfile
 
-from django.http import HttpResponseForbidden, FileResponse, HttpResponse
+from django.db.models import Q
+from django.http import HttpResponseForbidden, FileResponse, HttpResponse, JsonResponse
 from django.utils.encoding import force_str, force_bytes
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
@@ -21,22 +22,31 @@ def index(request):
 
 def topic_detail(request,id):
     product = Product.objects.get(id = id)
+    product.discount_percent = round(
+        ((product.ProductPrice - product.ProductDiscountPrice)
+         / product.ProductPrice) * 100
+    )
+
     return render(request,'topics-detail.html',{"product":product})
 
 def topic_listing(request):
     return render(request,'topic-listing.html')
 
 def our_services(request):
-    return render(request ,'our-services.html')
+    products = Product.objects.all()
+    first_five_products = Product.objects.order_by("-id")[:5]
+    return render(request ,'our-services.html',{'products' : products, "firstfive" : first_five_products})
 
 def template(request):
-    return render(request, 'template.html')
+    products = Product.objects.filter(CategoryId__CategoryName="Template")
+    return render(request, 'template.html', {'products' : products})
 
 def e_books(request):
-    return render(request, 'e_books.html')
+    products = Product.objects.filter(CategoryId__CategoryName="E-Books")
+    return render(request, 'e_books.html', {'products' : products})
 
 def pdfs(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(CategoryId__CategoryName="PDFs")
     return render(request, 'pdfs.html', {'products': products})
 
 def source_code(request):
@@ -47,9 +57,35 @@ def courses(request):
 
 def tools(request):
     return render(request,'tools.html')
+from django.db.models import Q
+
+def search(request):
+    query = request.GET.get('q')
+    products = Product.objects.all()
+
+    if query:
+        products = products.filter(
+            Q(ProductName__icontains=query) |
+            Q(ShortDescription__icontains=query) |
+            Q(LongDescription__icontains=query) |
+            Q(CategoryId__CategoryName__icontains=query)
+        ).distinct()
+
+    return render(request, 'search.html', {
+        'products': products,
+        'query': query
+    })
 
 def contact(request):
     return render(request,'contact.html')
+
+def category_page(request, id):
+    category = get_object_or_404(Category, id=id)
+
+    return render(request, f'products/{category.template_name}', {
+        'category': category
+    })
+
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
@@ -70,45 +106,75 @@ def has_purchased(client, product):
     ).exists()
 
 def cart(request):
+    client_user_id = request.session.get("client_user_id")
+
+    if not client_user_id:
+        messages.warning(request, "Please sign in first.")
+        return redirect("client_signup")
+
+    product_id = request.GET.get("product_id")
+    client = get_object_or_404(ClientUser, id=client_user_id)
+    product = get_object_or_404(Product, id=product_id)
+
+    # 🔎 1️⃣ Check if already purchased & verified
+    verified_order_item = OrderItem.objects.filter(
+        order__client=client,
+        order__is_paid=True,
+        order__is_verified=True,
+        product=product
+    ).first()
+
+    if verified_order_item:
+        messages.info(request, "You already purchased this product.")
+        return redirect("my_downloads")
+
+    # 🔎 2️⃣ Check if payment is pending verification
+    pending_order_item = OrderItem.objects.filter(
+        order__client=client,
+        order__is_paid=True,
+        order__is_verified=False,
+        product=product
+    ).first()
+
+    if pending_order_item:
+        messages.info(request, "Your payment is under verification.")
+        return redirect("payment_pending", order_id=pending_order_item.order.id)
+
+    # 🔎 3️⃣ Prevent duplicate cart entries
+    already_in_cart = Cart.objects.filter(user=client, product=product).exists()
+
+    if already_in_cart:
+        messages.info(request, "Product already in cart.")
+        return redirect("cart")
+
+    # 🟢 Add to cart
+    Cart.objects.create(user=client, product=product)
+    messages.success(request, "Product added to cart successfully.")
+
+    return redirect("cart")
+def remove_from_cart(request, cart_id):
     client_user_id = request.session.get('client_user_id')
 
     if not client_user_id:
-        messages.warning(request, "Please sign in first to add products to your cart.")
+        messages.warning(request, "Please sign in first.")
         return redirect('client_signup')
 
     client_user = get_object_or_404(ClientUser, id=client_user_id)
 
-    product_id = request.GET.get('product_id')
+    cart_item = get_object_or_404(
+        Cart,
+        id=cart_id,
+        user=client_user
+    )
 
-    # 🟢 ONLY run this block if product_id exists
-    if product_id:
-        product = get_object_or_404(Product, id=product_id)
+    cart_item.delete()
 
-        if has_purchased(client_user, product):
-            messages.info(request, "You already own this product. Check My Downloads.")
-            return redirect("my_downloads")
+    # AJAX Support
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({'status': 'success'})
 
-        cart_item, created = Cart.objects.get_or_create(
-            user=client_user,
-            product=product
-        )
-
-        if created:
-            messages.success(request, "Product added to cart successfully.")
-        else:
-            messages.info(request, "This product is already in your cart.")
-
-        return redirect('cart')
-
-    # 🟢 Normal cart view
-    cart_items = Cart.objects.filter(user=client_user).select_related("product")
-
-    cart_total = sum(item.product.ProductDiscountPrice for item in cart_items)
-
-    return render(request, 'cart.html', {
-        'cart_items': cart_items,
-        'cart_total': cart_total
-    })
+    messages.success(request, "Product removed from cart.")
+    return redirect('cart')
 
 def checkout(request):
     client_user_id = request.session.get('client_user_id')
@@ -128,10 +194,31 @@ def checkout(request):
     if buy_now_product_id:
         product = get_object_or_404(Product, id=buy_now_product_id)
 
-        if has_purchased(client_user, product):
+        # 🔎 Check if already purchased (paid + verified)
+        verified_order_item = OrderItem.objects.filter(
+            order__client=client_user,
+            order__is_paid=True,
+            order__is_verified=True,
+            product=product
+        ).first()
+
+        if verified_order_item:
             messages.info(request, "You already purchased this product.")
             return redirect("my_downloads")
 
+        # 🔎 Check if payment done but verification pending
+        pending_order_item = OrderItem.objects.filter(
+            order__client=client_user,
+            order__is_paid=True,
+            order__is_verified=False,
+            product=product
+        ).first()
+
+        if pending_order_item:
+            messages.info(request, "Your payment is under verification.")
+            return redirect("payment_pending", order_id=pending_order_item.order.id)
+
+        # 🟢 Continue normal Buy Now flow
         items.append({
             "product": product,
             "price": product.ProductDiscountPrice
@@ -141,7 +228,7 @@ def checkout(request):
 
         request.session['checkout_mode'] = 'buy_now'
         request.session['buy_now_product_id'] = product.id
-
+    # 🟢 CART FLOW
     # 🟢 CART FLOW
     else:
         cart_items = Cart.objects.filter(user=client_user)
@@ -151,11 +238,43 @@ def checkout(request):
             return redirect('cart')
 
         for item in cart_items:
+            product = item.product
+
+            # ✅ Already verified purchase
+            verified_order_item = OrderItem.objects.filter(
+                order__client=client_user,
+                order__is_paid=True,
+                order__is_verified=True,
+                product=product
+            ).first()
+
+            if verified_order_item:
+                messages.info(request, f"You already purchased {product.ProductName}.")
+                item.delete()
+                continue
+
+            # ⏳ Payment pending
+            pending_order_item = OrderItem.objects.filter(
+                order__client=client_user,
+                order__is_paid=True,
+                order__is_verified=False,
+                product=product
+            ).first()
+
+            if pending_order_item:
+                messages.info(request, f"{product.ProductName} payment is under verification.")
+                return redirect("payment_pending", order_id=pending_order_item.order.id)
+
+            # 🟢 Safe to checkout
             items.append({
-                "product": item.product,
-                "price": item.product.ProductDiscountPrice
+                "product": product,
+                "price": product.ProductDiscountPrice
             })
-            total += item.product.ProductDiscountPrice
+
+            total += product.ProductDiscountPrice
+
+        if not items:
+            return redirect("my_downloads")
 
         request.session['checkout_mode'] = 'cart'
 
@@ -299,7 +418,7 @@ def download_zip(request):
             zip_file.write(file_path, arcname=file_name)
     buffer.seek(0)
     response = HttpResponse(buffer, content_type="application/zip")
-    response["Content-Disposition"] = 'attachment; filename="my_purchases.zip"'
+    response["Content-Disposition"] = 'attachment; filename="InfiniDigital.zip"'
     return response
 
 def my_downloads(request):
