@@ -44,7 +44,7 @@ class Product(models.Model):
         null=True
     )
     CreationDate = models.DateTimeField(auto_now_add=True)
-    UpdationDate = models.DateTimeField(auto_now_add=True)
+    UpdationDate = models.DateTimeField(auto_now=True)
 
     DemoFolder = models.CharField(max_length=255,
         blank=True,

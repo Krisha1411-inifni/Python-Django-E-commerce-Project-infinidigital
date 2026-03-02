@@ -453,8 +453,8 @@ body {
 }
 
 .small-logo {
-	width: 32px;
-	height: 32px;
+	width: 40px;
+	height: 45px;
 }
 
 .small-logo svg {
@@ -465,7 +465,7 @@ body {
 
 .small-brand h3 {
 	font-family: 'Syne', sans-serif;
-	font-size: 14px;
+	font-size: 20px;
 	font-weight: 600;
 	letter-spacing: 2px;
 	color: var(--primary);
