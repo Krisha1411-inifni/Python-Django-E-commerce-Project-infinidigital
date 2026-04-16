@@ -757,7 +757,7 @@ def client_signup(request):
 
         if form_type == 'signup':
             username = request.POST.get('username')
-            fname = request.POST.get('fname')
+            fname = request.POST.get('')
             lname = request.POST.get('lname')
             email = request.POST.get('email')
             phone = request.POST.get('phone')
@@ -774,10 +774,6 @@ def client_signup(request):
 
             if ClientUser.objects.filter(phone_number=phone).exists():
                 messages.error(request, "Mobile Number already exists!")
-                return redirect('client_signup')
-
-            if password != confirm_password:
-                messages.error(request, "Passwords do not match!")
                 return redirect('client_signup')
 
             client = ClientUser(
