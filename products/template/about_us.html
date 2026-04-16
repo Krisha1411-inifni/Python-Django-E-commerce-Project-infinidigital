@@ -1,10 +1,400 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>About Us | InfiniDigital</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-$END$
+{% load static %}
+{% include 'header.html' %}
+{% include 'loading_screen.html' %}
+
+
+<main>
+    <header class="site-header d-flex flex-column justify-content-center align-items-center" style="background-image: url('{% static "images/Screenshot 2026-04-15 113146.png" %}');">
+                <div class="container">
+                    <div class="row align-items-center">
+
+                        <div class="col-lg-5 col-12">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/">Homepage</a></li>
+
+                                    <li class="breadcrumb-item active" aria-current="page">About Us</li>
+                                </ol>
+                            </nav>
+
+                            <h2 class="text-white">About Us</h2>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+
+        <!-- Page banner area start here -->
+
+        <!-- Page banner area end here -->
+
+        <!-- About area start here -->
+    <!-- Lottie Player Script -->
+
+<!-- Your Animation -->
+
+
+
+        <section class="discount-area about-area mt-5 pt-130">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 d-flex justify-content-center align-items-center">
+                        <div class="animation-wrapper">
+
+  <!-- CENTER ANIMATION -->
+  <lottie-player
+    src="{% static 'js/gumhead.json' %}"
+      background="transparent"
+      speed="1"
+      style="width: 400px; height: 290px;"
+      loop
+      autoplay>
+  </lottie-player>
+
+  <!-- ORBS -->
+  <div class="orb-about top">Start Small</div>
+  <div class="orb-about right">The Infini Way</div>
+  <div class="orb-about bottom">Learn Quickly</div>
+  <div class="orb-about left">Get Better Together</div>
+
+</div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="discount__item pl-30">
+                            <div class="section-header">
+                                <div class="section-title-icon">
+                                    <span class="title-icon mr-10"></span>
+                                    <h2>InfiniDigital – Where Digital Value Never Ends</h2>
+                                </div>
+                                <p class="mt-30 mb-55">
+                                    At InfiniDigital, we are committed to delivering high-quality digital products that empower creativity, learning, and productivity. Our platform brings together a diverse range of resources including professionally designed templates, insightful e-books, practical PDFs, in-depth courses, and ready-to-use projects—all in one place.<br>
+
+                                    Whether you're a student, creator, entrepreneur, or professional, InfiniDigital provides the tools and knowledge you need to grow, build, and succeed in the digital world. We focus on accessibility, quality, and innovation, ensuring that every product we offer adds real value to your journey.
+                                    </p>
+                                <a class="btn-one" href="contact.php"><span>More About us</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- About area end here -->
+
+        <!-- Service area start here -->
+        <section class="service-area m-5 pt-130 pb-130 bg-image" data-background="{% static 'images/about-bg.jpg' %}">
+            <div class="container">
+                <div class="row g-4 align-items-center justify-content-center justify-content-lg-start">
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="service__item mb-50">
+                            <div class="service__icon">
+                                <img src="{% static 'images/feature-icon1.png' %}" alt="icon">
+                            </div>
+                            <div class="service__content">
+                                <h4>Instant Access</h4>
+                                <p>Download instantly after purchase</p>
+                            </div>
+                        </div>
+                        <div class="service__item">
+                            <div class="service__icon">
+                                <img src="{% static 'images/feature-icon2.png' %}" alt="icon">
+                            </div>
+                            <div class="service__content">
+                                <h4>Secure Payments</h4>
+                                <p>Safe and encrypted checkout</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-4 d-none d-lg-block">
+                        <div class="service__image image">
+                            <img src="{% static 'images/bg-removebg-preview1.png' %}" alt="image">
+                            <div class="section-header service-header d-flex align-items-center">
+                                <span class="title-icon mr-10"></span>
+                                <h2>sign up & save 25%</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="service__item mb-50">
+                            <div class="service__icon">
+                                <img src="{% static 'images/feature-icon3.png' %}" alt="icon">
+                            </div>
+                            <div class="service__content">
+                                <h4>Dedicated Support</h4>
+                                <p>Quick help when you need it</p>
+                            </div>
+                        </div>
+                        <div class="service__item">
+                            <div class="service__icon">
+                                <img src="{% static 'images/feature-icon4.png' %}" alt="icon">
+                            </div>
+                            <div class="service__content">
+                                <h4>Quality Assured</h4>
+                                <p>Trusted, high-quality products</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Service area end here -->
+
+        <!-- Testimonial area start here -->
+        <section class="testimonial pt-130 pb-130">
+            <div class="container">
+                <div class="testimonial__wrp bor radius-10">
+                    <div class="testimonial__head-wrp bor-bottom pb-65 pt-65 pl-65 pr-65">
+                        <div class="section-header m-5 d-flex align-items-center">
+                            <span class="title-icon mr-10"></span>
+                            <h2>Behind InfiniDigital</h2>
+                        </div>
+                        <div class="arry-btn my-4 m-5 my-lg-0">
+                            <button class="arry-prev testimonial__arry-prev"><i class="bi bi-chevron-left"></i></button>
+                            <button class="ms-3 active arry-next testimonial__arry-next"><i class="bi bi-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="pt-45 pb-45 pr-55">
+                        <div class="row g-4 align-items-center justify-content-between">
+                            <div class="col-lg-7 m-5">
+                                <div class="swiper testimonial__slider">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <div class="testimonial__item pl-65">
+                                                <div class="testi-header mb-30">
+                                                    <div class="testi-content ">
+                                                        <h3>RADADIYA KRISHA </h3>
+
+                                                    </div>
+                                                    <i class="fa-solid fa-quote-right"></i>
+                                                </div>
+                                                <p style="color :  #fa4f09">Founder & Project Lead</p>
+                                                  <p style="color :  #fa4f09">Built and managed InfiniDigital</p>
+                                                  <p style="color :  #fa4f09">Full-stack development</p>
+                                                  <div class="social-icon mt-40">
+                                                    <a href=""><i class="fa-brands fa-facebook-f"></i></a>
+                                                    <a href="#0"><i class="fa-brands fa-twitter"></i></a>
+                                                    <a href="#0"><i class="fa-brands fa-linkedin-in"></i></a>
+
+                                                    </div>
+                                            </div>
+                                        </div>
+                                            <div class="swiper-slide">
+                                                <div class="testimonial__item pl-65">
+                                                <div class="testi-header mb-0">
+                                                    <div class="testi-content">
+
+                                                        <h3>SparksToIdeas</h3>
+
+
+                                                    </div>
+                                                    <i class="fa-solid fa-quote-right"></i>
+                                                </div>
+                                                <p style="color :  #fa4f09">Development Platform</p>
+                                                <p style="color :  #fa4f09">Provided guidance & resources</p>
+                                                <p style="color :  #fa4f09">Supported project development</p>
+                                                <div class="social-icon mt-40">
+                                                    <a href="#0"><i class="fa-brands fa-facebook-f"></i></a>
+                                                    <a href="#0"><i class="fa-brands fa-twitter"></i></a>
+                                                    <a href="#0"><i class="fa-brands fa-linkedin-in"></i></a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="testimonial__item pl-65">
+                                                <div class="testi-header mb-30">
+                                                    <div class="testi-content">
+                                                        <h3>PRIYA PANCHAL</h3>
+
+                                                    </div>
+                                                    <i class="fa-solid fa-quote-right"></i>
+                                                </div>
+                                                 <p style="color :  #fa4f09">Project Mentor</p>
+                                                    <p style="color :  #fa4f09">Guidance and support</p>
+                                                    <p style="color :  #fa4f09">Technical mentorship</p>                                     <div class="social-icon mt-40">
+                                                    <a href="#0"><i class="fa-brands fa-facebook-f"></i></a>
+                                                    <a href="#0"><i class="fa-brands fa-twitter"></i></a>
+                                                    <a href="#0"><i class="fa-brands fa-linkedin-in"></i></a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="testimonial__image">
+                                   <div class="swiper testimonial__slider">
+                                    <div class="swiper-wrapper m-2">
+                                         <div class="swiper-slide">
+                                             <img src="{% static 'images/p2.jpg' %}" alt="image">
+                                         </div>
+                                        <div class="swiper-slide">
+                                            <img src="{% static 'images/sparks.png' %}" alt="image">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="{% static 'images/p4.jpg' %}" alt="image">
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Testimonial area end here -->
+
+        <!-- Blog area start here -->
+        <section class="blog pt-130 pb-130 mt-5 sub-bg">
+            <div class="container">
+                <div class="blog__head-wrp mb-65">
+                    <div class="section-header d-flex align-items-center">
+                        <span class="title-icon mr-10"></span>
+                        <h2>What Our Users Say</h2>
+                    </div>
+                </div>
+                <div class="row g-4 m-2">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="blog__item-left">
+                            <div class="swiper blog__slider">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <div class="blog__item-left-content">
+                                                 <h3>Vaghasiya Kairvi</h3>
+                                                <p>InfiniDigital is an amazing platform for accessing high-quality digital resources. The templates and e-books are well-organized and easy to use. It really helped me improve my workflow. Highly recommended!</p>
+                                                <span class="blog__item-left-content-info">By <strong class="me-3">Vaghasiya Kairvi</strong> 2 weeks ago</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="image">
+                                                    <img class="radius-10" src="{% static 'images/bg-1.jpg' %}"
+                                                        alt="image">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <div class="blog__item-left-content">
+
+                                                <h3>Rathod Vishwa</h3>
+                                                <p>I found some excellent courses and project files on InfiniDigital. Everything is categorized perfectly, making it easy to find what I need. Great experience overall!</p>
+                                                <span class="blog__item-left-content-info">By <strong>Rathod Vishwa</strong> 1 week ago</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="image">
+                                                    <img style ="height: 740; width:740" class="radius-10" src="{% static 'images/bg-2.jpg' %}"
+                                                        alt="image">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <div class="blog__item-left-content">
+
+                                                    <h3>Hemangi Goswami</h3>
+                                                    <p>InfiniDigital helped me discover useful PDFs and learning materials that I couldn’t find elsewhere. The platform is simple, clean, and very helpful for students.</p>
+                                                    <span class="blog__item-left-content-info">By <strong>Godhasara Foram</strong> 2 days ago</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="image">
+                                                    <img class="radius-10" src="{% static 'images/bg-3.jpg' %}"
+                                                        alt="image">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="blog__item-left-dot-wrp">
+                                <div class="dot blog__dot"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- Blog area end here -->
+
+
+    </main>
+
+                                {% include 'footer.html' %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+<script>
+  var testimonialSwiper = new Swiper(".testimonial__slider", {
+    loop: true,
+    slidesPerView: 1,
+    spaceBetween: 20,
+
+    autoplay: {
+      delay: 3000,   // 3 seconds
+      disableOnInteraction: false,
+    },
+
+    navigation: {
+      nextEl: ".testimonial__arry-next",
+      prevEl: ".testimonial__arry-prev",
+    },
+  });
+</script>
+<script>
+  var blogSwiper = new Swiper(".blog__slider", {
+    loop: true,
+    slidesPerView: 1,
+    spaceBetween: 20,
+
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+
+    pagination: {
+      el: ".blog__dot",
+      clickable: true,
+    },
+  });
+</script>
+
+
+<script>
+const anim = document.getElementById("anim");
+
+anim.addEventListener("ready", () => {
+  anim.pause();
+  anim.seek(0); // start at frame 0
+});
+
+// Step control
+function playStep(start, end) {
+  anim.playSegments([start, end], true);
+}
+
+// Example steps
+setTimeout(() => playStep(0, 50), 1000);
+setTimeout(() => playStep(50, 100), 2500);
+setTimeout(() => playStep(100, 150), 4000);
+setTimeout(() => playStep(150, 200), 5500);
+</script>
 </body>
 </html>

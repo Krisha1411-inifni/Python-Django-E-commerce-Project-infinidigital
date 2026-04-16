@@ -1,0 +1,132 @@
+<!doctype html>
+{% include 'header.html' %}
+{% include 'loading_screen.html' %}
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Contact | InfiniDigital</title>
+    </head>
+<body>
+
+    <main>
+            <header class="site-header d-flex flex-column justify-content-center align-items-center" style="background-image: url('{% static "images/Screenshot 2026-04-15 113423.png" %}');">
+                <div class="container">
+                    <div class="row align-items-center">
+
+                        <div class="col-lg-5 col-12">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/">Homepage</a></li>
+
+                                    <li class="breadcrumb-item active" aria-current="page">Contact Form</li>
+                                </ol>
+                            </nav>
+
+                            <h2 class="text-white">Contact Form</h2>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+
+
+            <section class="contact-section">
+
+  <div class="contact-container">
+
+    <!-- LEFT: FORM -->
+    <div class="contact-left">
+      <h2>Let's Connect </h2>
+
+      <form method="POST" class="contact-form">
+        {% csrf_token %}
+
+        <div class="field">
+          <input type="text" name="name" required>
+          <label>Name</label>
+          <span class="line"></span>
+        </div>
+
+        <div class="field">
+          <input type="email" name="email" required>
+          <label>Email</label>
+          <span class="line"></span>
+        </div>
+
+        <div class="field">
+          <input type="text" name="subject">
+          <label>Subject</label>
+          <span class="line"></span>
+        </div>
+
+        <div class="field">
+          <textarea name="message" required></textarea>
+          <label>Message</label>
+          <span class="line"></span>
+        </div>
+
+        <button type="submit" class="cta-btn">
+          Send Message
+        </button>
+
+      </form>
+    </div>
+
+    <!-- RIGHT: DYNAMIC INFO PANEL -->
+    <div class="contact-right">
+
+  <div class="sales-box">
+
+    <h2> Build Faster with InfiniDigital</h2>
+
+    <p>
+      Get access to premium templates, tools, and ready-to-use projects
+      designed to save your time and boost your results.
+    </p>
+
+    <ul>
+      <li>⚡ Instant download after purchase</li>
+      <li>💡 High-quality ready-to-use assets</li>
+      <li>🔥 Save 100+ hours of work</li>
+    </ul>
+
+    <a href="/products/" class="cta-btn">
+      Explore Products →
+    </a>
+
+  </div>
+
+</div>
+
+  </div>
+
+</section>
+        </main>
+
+{% include 'footer.html' %}
+
+<script>
+const fields = document.querySelectorAll(".field");
+const infoBox = document.getElementById("infoBox");
+
+fields.forEach(field => {
+  field.addEventListener("focusin", () => {
+    const text = field.getAttribute("data-info");
+
+    infoBox.innerHTML = `<h3>💡 Tip</h3><p>${text}</p>`;
+    infoBox.classList.add("active");
+  });
+
+  field.addEventListener("focusout", () => {
+    infoBox.classList.remove("active");
+  });
+});
+</script>
+</body>
+</html>

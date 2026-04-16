@@ -1,0 +1,177 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="{{ product.ShortDescription }}">
+        <meta property="og:title" content="{{ product.ProductName }}">
+        <meta property="og:description" content="{{ product.ShortDescription }}">
+        {% if product.ProductImage1 %}
+        <meta property="og:image" content="{{ product.ProductImage1.url }}">
+        {% endif %}
+        <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+        <title>{{ product.ProductName }} | InfiniDigital</title>
+    </head>
+
+    <body id="top">
+    {% include 'header.html' %}
+{% include 'loading_screen.html' %}
+
+
+            <header class="site-header d-flex flex-column justify-content-center align-items-center"  style="background-image: url('{% static "images/Screenshot 2026-04-15 113556.png" %}');">
+                <div class="container">
+                    <div class="row justify-content-center align-items-center">
+
+                        <div class="col-lg-5 col-12 mb-5">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/">Homepage</a></li>
+
+                                    <li class="breadcrumb-item active" aria-current="page">Course Player</li>
+                                </ol>
+                            </nav>
+
+                            <h2 class="text-white">Course Player</h2>
+
+                        </div>
+
+                        <div class="col-lg-5 col-12">
+                            <div class="topics-detail-block bg-white shadow-lg">
+                                <img src="{% static 'images/topics/undraw_Remote_design_team_re_urdx.png' %}" class="topics-detail-block-image img-fluid">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+
+
+<section class="course-player py-4">
+
+<div class="container-fluid">
+
+<div class="row">
+
+<!-- LESSON SIDEBAR -->
+<div class="col-lg-3 lesson-sidebar">
+
+<h5 class="course-title">
+{{ product.ProductName }}
+</h5>
+
+<div class="lesson-scroll">
+
+<ul class="lesson-list">
+
+{% for lesson in lessons %}
+
+<li class="lesson-item">
+
+<a href="?lesson={{ lesson.id }}"
+class="{% if lesson.id in completed_lessons %}completed{% endif %}">
+
+<span class="lesson-icon">
+{% if lesson.id in completed_lessons %}
+✔
+{% else %}
+▶
+{% endif %}
+</span>
+
+<span class="lesson-title">
+{{ lesson.title }}
+</span>
+
+</a>
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+</div>
+
+
+<!-- VIDEO PLAYER AREA -->
+<div class="col-lg-9 video-area">
+
+<div class="video-card">
+
+{% if current_lesson %}
+
+<video class="course-video" controls>
+<source src="{{ current_lesson.video.url }}" type="video/mp4">
+</video>
+    <form method="POST" action="{% url 'complete_lesson' current_lesson.id %}">
+{% csrf_token %}
+
+<button class="btn btn-success mt-3">
+✔ Mark Lesson Complete
+</button>
+
+
+</form>
+
+
+<h4 class="lesson-heading mt-3">
+{{ current_lesson.title }}
+</h4>
+
+{% endif %}
+
+</div>
+
+
+<!-- PROGRESS -->
+<div class="progress-wrapper">
+
+<div class="progress">
+
+<div class="progress-bar"
+role="progressbar"
+style="width: {{ progress }}%">
+
+{{ progress }}%
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- CERTIFICATE -->
+{% if course_completed %}
+
+<div class="certificate-box">
+
+<h5>🎉 Course Completed</h5>
+
+<p>You have successfully completed this course.</p>
+
+<a href="{% url 'download_certificate' product.id %}"
+class="btn btn-success">
+
+Download Certificate
+
+</a>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+{% include "footer.html" %}

@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
-import os
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,16 +27,18 @@ EMAIL_HOST_PASSWORD = 'wcqekyoylhdzkcrx'
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2ndv%)6sc!$k@n8=*au6+ti9+9j@$bry12mtlw8vu*b+2e+3ga'
+SECRET_KEY = 'django-insecure-ueh8=uhq@0f$%#bm*wt6&n0qbo)o%eb6$@3jn^lf05p#c^$3w!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 
 # Application definition
@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'products.apps.ProductsConfig',
+    'ckeditor',
+
 ]
 
 MIDDLEWARE = [
@@ -129,9 +131,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
-# Optional: if your static files are in a global folder
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
-

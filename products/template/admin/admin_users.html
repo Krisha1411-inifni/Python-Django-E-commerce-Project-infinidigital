@@ -1,10 +1,330 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfiniDigital - Admin</title>
+    <meta name="description" content="3D Glassmorphism Dashboard Template by TemplateMo">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/admin/templatemo-glass-admin-style.css' %}">
+    <!--
+
+TemplateMo 607 Glass Admin
+
+https://templatemo.com/tm-607-glass-admin
+
+-->
 </head>
 <body>
-$END$
+{% include 'admin/admin_loading_screen.html' %}
+    <!-- Animated Background -->
+    <div class="background"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img style="height:60px; width:85px;" src="{% static 'images/logo2-2.png' %}">
+                <span class="logo-text">InfiniDigital</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-section">
+                    <span class="nav-section-title">Main Menu</span>
+                    <ul>
+                        <li class="nav-item">
+                            <a href="{% url 'admin_dashboard' %}" class="nav-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-speedometer2 nav-icon" viewBox="0 0 16 16">
+                                  <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4M3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707M2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.39.39 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.39.39 0 0 0-.029-.518z"/>
+                                  <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A8 8 0 0 1 0 10m8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3"/>
+                                </svg>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'admin_category' %}" class="nav-link">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="7" height="7" rx="1"/>
+                                    <rect x="14" y="3" width="7" height="7" rx="1"/>
+                                    <rect x="3" y="14" width="7" height="7" rx="1"/>
+                                    <rect x="14" y="14" width="7" height="7" rx="1"/>
+                                </svg>
+                                Category
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'admin_products' %}" class="nav-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box nav-icon" viewBox="0 0 16 16">
+                                  <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5 8 5.961 14.154 3.5zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464z"/>
+                                </svg>
+                                Products
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'admin_users' %}" class="nav-link active">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                                Admins
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'admin_orders' %}" class="nav-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-boxes nav-icon" viewBox="0 0 16 16">
+                                      <path d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434zM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567zM7.5 9.933l-2.75 1.571v3.134l2.75-1.571zm1 3.134 2.75 1.571v-3.134L8.5 9.933zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567zm2.242-2.433V3.504L8.5 5.076V8.21zM7.5 8.21V5.076L4.75 3.504v3.134zM5.258 2.643 8 4.21l2.742-1.567L8 1.076zM15 9.933l-2.75 1.571v3.134L15 13.067zM3.75 14.638v-3.134L1 9.933v3.134z"/>
+                                    </svg>
+                                Orders
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'client_user' %}" class="nav-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-bounding-box nav-icon" viewBox="0 0 16 16">
+                                  <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5"/>
+                                  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                </svg>
+                                Clients
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-section">
+                    <span class="nav-section-title">Account</span>
+                    <ul>
+                        <li class="nav-item">
+                            <a href="{% url 'admin_logout' %}" class="nav-link">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                    <polyline points="16 17 21 12 16 7"/>
+                                    <line x1="21" y1="12" x2="9" y2="12"/>
+                                </svg>
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+    <div class="user-profile">
+
+        <!-- Avatar (First Letters) -->
+        <div class="user-avatar">
+            {{ request.user.username|slice:":2"|upper }}
+        </div>
+
+        <div class="user-info">
+            <div class="user-name">
+                {{ request.user.username }}
+            </div>
+
+            <div class="user-role">
+                {% if request.user.is_superuser %}
+                    Administrator
+                {% elif request.user.is_staff %}
+                    Staff
+                {% else %}
+                    User
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+        </aside>
+
+
+<main class="main-content">
+            <nav class="navbar">
+                <h1 class="page-title">Admin Overview</h1>
+                <div class="navbar-right">
+                    <button class="nav-btn" id="theme-toggle" title="Toggle Light/Dark Mode">
+                        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="4"/>
+                            <path d="M12 2v2"/><path d="M12 20v2"/>
+                            <path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/>
+                            <path d="M2 12h2"/><path d="M20 12h2"/>
+                            <path d="M6.34 17.66l-1.41 1.41"/><path d="M19.07 4.93l-1.41 1.41"/>
+                        </svg>
+                        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+
+<section class="content-grid">
+
+    <div class="glass-card">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title">Admin Users</h2>
+                <p class="card-subtitle">Manage your Admin Users</p>
+            </div>
+            <button class="card-btn" onclick="openModal()">
+                + Add Admin User</button>
+        </div>
+    </div>
+
+    <div class="glass-card table-card">
+         <form method="get" style="margin-bottom: 15px;">
+                <div class="filter-bar">
+
+    <a href="?sort=asc" class="filter-pill {% if current_sort == 'asc' %}active{% endif %}">
+        ↑ ID
+    </a>
+
+    <a href="?sort=desc" class="filter-pill {% if current_sort == 'desc' %}active{% endif %}">
+        ↓ ID
+    </a>
+
+    <a href="?sort=name_az" class="filter-pill {% if current_sort == 'name_az' %}active{% endif %}">
+        Name A-Z
+    </a>
+
+    <a href="?sort=name_za" class="filter-pill {% if current_sort == 'name_za' %}active{% endif %}">
+        Name Z-A
+    </a>
+
+</div>
+            </form>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Joining Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in admin_user %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.date_joined }}</td>
+                        <td>
+
+   <a href="javascript:void(0)"
+   class="card-btn edit-btn"
+
+   data-id="{{ user.id }}"
+   data-name="{{ user.username|escapejs }}"
+   data-email="{{ user.email|escapejs }}"
+>
+   Edit
+</a>
+
+
+                            <a href="#"
+                               class="card-btn delete-btn"
+                               data-id="{{ user.id }}"
+                               data-name="{{ user.username|escapejs }}">
+                               Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="pagination-orb">
+
+    {% if products.has_previous %}
+        <a href="?page={{ products.previous_page_number }}&sort={{ current_sort }}" class="orb-btn">‹</a>
+    {% else %}
+        <span class="orb-btn disabled">‹</span>
+    {% endif %}
+
+    {% for num in page_range %}
+        {% if products.number == num %}
+            <span class="orb-btn active">{{ num }}</span>
+        {% else %}
+            <a href="?page={{ num }}&sort={{ current_sort }}" class="orb-btn">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if products.has_next %}
+        <a href="?page={{ products.next_page_number }}&sort={{ current_sort }}" class="orb-btn">›</a>
+    {% else %}
+        <span class="orb-btn disabled">›</span>
+    {% endif %}
+
+</div>
+        </div>
+    </div>
+
+</section>
+            </main>
+    </div>
+    <div class="wizard-modal" id="userModal">
+  <div class="wizard-box">
+
+    <!-- HEADER -->
+    <div class="wizard-header">
+      <h2>Create Product</h2>
+      <span class="close" onclick="closeModal()">✕</span>
+    </div>
+
+    <!-- FORM -->
+    <form id="userform" action="{% url 'admin_register' %}">
+    {% csrf_token %}
+
+      <div class="steps">
+<input type="hidden" name="user_id" id="user_id">
+        <div class="step active">
+
+          <!-- PRODUCT NAME -->
+          <div class="input-group full-width">
+            <label>Username</label>
+            <input type="text" name="username" placeholder="Username" required>
+          </div>
+
+          <!-- SHORT DESCRIPTION -->
+          <div class="input-group full-width">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Email">
+          </div>
+
+          <div class="input-group full-width">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Password" required>
+          </div>
+
+          <div class="input-group full-width">
+            <label>Password</label>
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+          </div>
+
+        </div>
+ <div class="controls">
+
+
+    <div class="center-action">
+        <button type="submit" class="submit-btn">
+             Add Admin User
+        </button>
+    </div>
+</div>
+      </div>
+
+    </form>
+
+
+  </div>
+</div>
+    <div id="toast" class="toast"></div>
+
+    <script src="{% static 'js/admin/admin_users.js' %}"></script>
 </body>
 </html>

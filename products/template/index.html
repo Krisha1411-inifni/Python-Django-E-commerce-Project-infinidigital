@@ -1,0 +1,559 @@
+{% load static %}
+
+<!doctype html>
+
+<html lang="en">
+{% include 'header.html' %}
+{% include 'loading_screen.html' %}
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>InfiniDigital - Digital Excellence</title>
+    </head>
+<body>
+
+    <main>
+    <section class="banner-two">
+            <div class="swiper banner-two__slider">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img class="slide-bg" src="{% static 'images/template.jpg' %}">
+                        <div class="container">
+                            <div class="banner-two__content">
+                                <h1>
+                                  Your Ultimate Marketplace for Premium Digital Assets<br>
+                                    Templates, Courses, E-books & Source Code
+                                </h1>
+
+                                <p>
+                                  Everything you need to build, learn, and grow — <br>curated for developers, creators, and entrepreneurs.
+                                </p>
+
+                                    <div class="btn-wrp mt-65">
+                                        <a href="{% url 'services' %}" class="btn-one">
+                                            <span>Explore Marketplace</span>
+                                        </a>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img class="slide-bg" src="{% static 'images/e-book1.jpg' %}">
+                        <div class="container">
+                            <div class="banner-two__content">
+                                <h1>Discover High-Quality Digital Products</h1>
+
+                                    <p class="mt-40">
+                                    Browse premium templates, e-books, courses, and <br>source code to accelerate your projects and skills.
+                                    </p>
+
+                                    <div class="btn-wrp mt-65">
+                                        <a href="{% url 'services' %}" class="btn-one">
+                                            <span>Explore Marketplace</span>
+                                        </a>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img class="slide-bg" src="{% static 'images/pdf.jpg' %}">
+                        <div class="container">
+                            <div class="banner-two__content">
+                                <h1>Make you Future more <strong>Bright</strong></h1>
+
+                                    <p class="mt-40">
+                                        Make you skills that touches the cloud
+                                    <br>learning from your creativity — no limits, no hassle.
+                                    </p>
+
+                                    <div class="btn-wrp mt-65">
+                                        <a href="{% url 'services' %}" class="btn-one">
+                                            <span>Explore Marketplace</span>
+                                        </a>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="banner-two__arry-btn">
+                <button class="arry-prev mb-15 banner-two__arry-prev"><i class="bi bi-chevron-left text-white"></i></button>
+                <button class="arry-next active banner-two__arry-next"><i class="bi bi-chevron-right text-white"></i></button>
+            </div>
+
+        </section>
+
+<section class="section-padding">
+  <div class="container">
+    <h2 class="text-white text-center mb-5">Trending Products</h2>
+
+    <div class="row g-4">
+  {% for product in products %}
+  <div class="col-lg-3 col-md-6 d-flex">
+
+    <div class="product-card-3d product-card-clean w-100">
+
+    <!-- IMAGE -->
+    <div class="product-img">
+        {% if product.ProductImage1 %}
+            <img src="{{ product.ProductImage1.url }}" alt="">
+        {% endif %}
+
+      <!-- TOP BADGE -->
+      {% if product.ProductDiscountPrice %}
+      <span class="badge-discount">SALE</span>
+      {% endif %}
+
+      <!-- OVERLAY -->
+      <div class="product-overlay">
+        <a href="{% url 'topic_detail' product.id %}" class="btn-view">View Details</a>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="product-info">
+      <h5>{{ product.ProductName }}</h5>
+
+      <div class="price-box">
+        {% if product.ProductDiscountPrice %}
+          <span class="old">₹{{ product.ProductPrice }}</span>
+          <span class="new">₹{{ product.ProductDiscountPrice }}</span>
+        {% else %}
+          <span class="new">₹{{ product.ProductPrice }}</span>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!--    <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">-->
+
+
+<!--    <div class="hero-overlay"></div>-->
+<!--                <div class="container">-->
+<!--                    <div class="row">-->
+
+<!--                        <div class="col-lg-8 col-12 mx-auto">-->
+<!--                            <h1 class="text-black text-center">Discover. Learn. Enjoy</h1>-->
+
+<!--                            <h6 class="text-center">platform for creatives around the world</h6>-->
+
+<!--                            <form method="get" class="custom-form mt-4 pt-2 mb-lg-0 mb-5 text-white" role="search">-->
+<!--                                <div class="input-group input-group-lg bg-black text-white">-->
+<!--                                    <span class="input-group-text bi-search text-white" id="basic-addon1">-->
+
+<!--                                    </span>-->
+
+<!--                                    <input name="keyword" type="search" class="form-control bg-black" id="keyword" placeholder="Design, Code, Marketing, Finance ..." aria-label="Search">-->
+
+<!--                                    <button type="submit" class="form-control">Search</button>-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </section>-->
+
+
+<!--            <section class="featured-section">-->
+<!--                <div class="container">-->
+<!--                    <div class="row justify-content-center">-->
+
+<!--                        <div class="col-lg-4 col-12 mb-4 mb-lg-0">-->
+<!--                            <div class="custom-block bg-white shadow-lg">-->
+<!--                                <a href="/TopicDetail">-->
+<!--                                    <div class="d-flex">-->
+<!--                                        <div>-->
+<!--                                            <h5 class="mb-2">Web Design</h5>-->
+
+<!--                                            <p class="mb-0">When you search for free CSS templates, you will notice that TemplateMo is one of the best websites.</p>-->
+<!--                                        </div>-->
+
+<!--                                        <span class="badge bg-design rounded-pill ms-auto">14</span>-->
+<!--                                    </div>-->
+
+<!--                                    <img src="{% static 'images/topics/undraw_Remote_design_team_re_urdx.png' %}" class="custom-block-image img-fluid" alt="">-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="col-lg-6 col-12">-->
+<!--                            <div class="custom-block custom-block-overlay">-->
+<!--                                <div class="d-flex flex-column h-100">-->
+<!--                                    <img src="{% static 'images/businesswoman-using-tablet-analysis.jpg' %}" class="custom-block-image img-fluid" alt="">-->
+
+<!--                                    <div class="custom-block-overlay-text d-flex">-->
+<!--                                        <div>-->
+<!--                                            <h5 class="text-white mb-2">Finance</h5>-->
+
+<!--                                            <p class="text-white">Topic Listing Template includes homepage, listing page, detail page, and contact page. You can feel free to edit and adapt for your CMS requirements.</p>-->
+
+<!--                                            <a href="/TopicDetail" class="btn custom-btn mt-2 mt-lg-3">Learn More</a>-->
+<!--                                        </div>-->
+
+<!--                                        <span class="badge bg-finance rounded-pill ms-auto">25</span>-->
+<!--                                    </div>-->
+
+<!--                                    <div class="social-share d-flex">-->
+<!--                                        <p class="text-white me-4">Share:</p>-->
+
+<!--                                        <ul class="social-icon">-->
+<!--                                            <li class="social-icon-item">-->
+<!--                                                <a href="#" class="social-icon-link bi-twitter"></a>-->
+<!--                                            </li>-->
+
+<!--                                            <li class="social-icon-item">-->
+<!--                                                <a href="#" class="social-icon-link bi-facebook"></a>-->
+<!--                                            </li>-->
+
+<!--                                            <li class="social-icon-item">-->
+<!--                                                <a href="#" class="social-icon-link bi-pinterest"></a>-->
+<!--                                            </li>-->
+<!--                                        </ul>-->
+
+<!--                                        <a href="#" class="custom-icon bi-bookmark ms-auto"></a>-->
+<!--                                    </div>-->
+
+<!--                                    <div class="section-overlay"></div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </section>-->
+
+
+            <section class="category-orbs-section">
+    <h2 class="text-center text-white mb-5">Explore Digital Universe</h2>
+
+    <div class="orbs-container">
+
+        {% for category in categories %}
+        <a href="{{ category.get_url }}" class="orb">
+
+            <div class="orb-inner">
+                <h4>{{ category.CategoryName }}</h4>
+                <p>{{ category.CategoryDescription|truncatewords:8 }}</p>
+            </div>
+
+        </a>
+        {% endfor %}
+
+    </div>
+</section>
+
+
+            <section class="timeline-section section-padding" id="section_3">
+                <div class="section-overlay"></div>
+
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-12 text-center">
+                            <h2 class="text-white mb-4">How does it work?</h2>
+                        </div>
+
+                        <div class="col-lg-10 col-12 mx-auto">
+                            <div class="timeline-container">
+                                <ul class="vertical-scrollable-timeline" id="vertical-scrollable-timeline">
+                                    <div class="list-progress">
+                                        <div class="inner"></div>
+                                    </div>
+
+                                    <li>
+                                        <h4 class="text-white mb-3">Browse Digital Products</h4>
+
+                                        <p class="text-white">
+                                        Explore templates, courses, e-books, and ready-made projects designed for developers and creators.
+                                        </p>
+
+                                        <div class="icon-holder">
+                                          <i class="bi-grid"></i>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <h4 class="text-white mb-3">Preview & Select</h4>
+
+                                        <p class="text-white">
+                                        Check product previews, details, and features before making your purchase decision.
+                                        </p>
+
+                                        <div class="icon-holder">
+                                          <i class="bi-eye"></i>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <h4 class="text-white mb-3">Download Instantly</h4>
+
+                                        <p class="text-white">
+                                        Get instant access to your purchased files and start using them right away.
+                                        </p>
+
+                                        <div class="icon-holder">
+                                          <i class="bi-download"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-center mt-5">
+                            <p class="text-white">
+                              Ready to explore premium digital products?
+                                <a href="{% url 'services' %}" class="btn-one ms-3"><span>Browse Now</span></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+<section class="section-padding">
+  <div class="container text-center">
+
+    <h2 class="mb-5 text-white">Why Choose Us</h2>
+
+    <div class="row g-4">
+
+      <div class="col-lg-3 col-md-6">
+        <div class="feature-card">
+          <i class="bi-lightning-charge"></i>
+          <h5>Instant Access</h5>
+          <p>Download products immediately after purchase</p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="feature-card">
+          <i class="bi-shield-lock"></i>
+          <h5>Secure System</h5>
+          <p>Safe and reliable platform for digital products</p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="feature-card">
+          <i class="bi-stars"></i>
+          <h5>Premium Quality</h5>
+          <p>Carefully selected high-quality resources</p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="feature-card">
+          <i class="bi-clock-history"></i>
+          <h5>Lifetime Access</h5>
+          <p>Access your downloads anytime</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+        <section class="stats-section">
+    <div class="container">
+
+        <h2 class="section-title">Our Impact</h2>
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <h2 class="counter" data-target="{{ allproduct }}">0</h2>
+                <p>Digital Products</p>
+            </div>
+
+            <div class="stat-card">
+                <h2 class="counter" data-target="{{ clients }}">0</h2>
+                <p>Happy Customers</p>
+            </div>
+
+            <div class="stat-card">
+                <h2 class="counter" data-target="{{ category }}">0</h2>
+                <p>Creators</p>
+            </div>
+
+            <div class="stat-card">
+                <h2 class="counter" data-target="48">0</h2>
+                <p>Avg Rating (4.8★)</p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+
+    <h2>Explore Amazing Digital Products</h2>
+
+<p>
+  Discover high-quality digital products created by talented creators.
+</p>
+
+<div class="cta-buttons">
+  <a href="{% url 'services' %}" class="btn-primary">Browse Products</a>
+  <a href="{% url 'services' %}" class="btn-outline">Explore Categories</a>
+</div>
+  </div>
+</section>
+        </main>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    new Swiper(".banner-two__slider", {
+  loop: true,
+  effect: "fade",
+  fadeEffect: {
+    crossFade: true
+  },
+  speed: 2500,
+  autoplay: {
+    delay: 6000,
+    disableOnInteraction: false,
+  },
+  navigation: {
+    nextEl: ".banner-two__arry-next",
+    prevEl: ".banner-two__arry-prev",
+  },
+});
+
+
+});
+document.addEventListener('DOMContentLoaded', function () {
+  const slider = document.querySelector('.orb-slider');
+
+  let speed = 2;
+
+  function autoSlide() {
+    if (!slider) return;
+
+    slider.scrollLeft += speed;
+
+    if (slider.scrollLeft >= slider.scrollWidth / 2) {
+      slider.scrollLeft = 0;
+    }
+
+    requestAnimationFrame(autoSlide);
+  }
+
+  autoSlide();
+
+  slider.addEventListener('mouseenter', () => speed = 0);
+  slider.addEventListener('mouseleave', () => speed = 2);
+});
+    const glow = document.querySelector('.cursor-glow');
+
+document.addEventListener('mousemove', (e) => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top = e.clientY + 'px';
+});
+
+    const reveals = document.querySelectorAll('.reveal');
+
+window.addEventListener('scroll', () => {
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if (top < window.innerHeight - 100) {
+      el.classList.add('active');
+    }
+  });
+});
+
+    document.querySelectorAll('.orb1').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rotateX = -(y / rect.height - 0.5) * 20;
+    const rotateY = (x / rect.width - 0.5) * 20;
+
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = `rotateX(0) rotateY(0) scale(1)`;
+  });
+});
+
+    document.querySelectorAll('.orb1').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rotateX = -(y / rect.height - 0.5) * 20;
+    const rotateY = (x / rect.width - 0.5) * 20;
+
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = `rotateX(0) rotateY(0) scale(1)`;
+  });
+});
+const counters = document.querySelectorAll('.counter');
+
+const startCounter = (counter) => {
+    const target = +counter.getAttribute('data-target');
+    let count = 0;
+
+    const update = () => {
+        const increment = target / 120;
+
+        if (count < target) {
+            count += increment;
+            counter.innerText = Math.floor(count);
+            requestAnimationFrame(update);
+        } else {
+            counter.innerText = target + "+";
+        }
+    };
+
+    update();
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+
+            // RESET before starting (important 🔥)
+            entry.target.innerText = "0";
+
+            startCounter(entry.target);
+        }
+    });
+}, {
+    threshold: 0.6
+});
+
+// observe all counters
+counters.forEach(counter => {
+    observer.observe(counter);
+});
+</script>
+
+
+{% include 'footer.html' %}
+
+    </body>
+</html>

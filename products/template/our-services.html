@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfiniDigital - Digital Excellence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/templatemo-nexaverse.css' %}">
+<!--
+
+TemplateMo 603 Nexaverse
+
+https://templatemo.com/tm-603-nexaverse
+
+-->
+</head>
+<body>
+{% include 'loading_screen.html' %}
+
+    <!-- Ambient Background -->
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Grid Overlay -->
+    <div class="grid-overlay"></div>
+        <div class="page-heading">
+            <div class="container">
+              <div class="row">
+                <div class="hero-content">
+                    <h1>Premium Digital Products</h1>
+                    <p>E-Books • Templates • PDFs • Courses • Tools • Source Code</p>
+                  </div>
+              </div>
+            </div>
+          </div>
+<div class="featured-explore">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="owl-features owl-carousel">
+                        {% for product in firstfive %}
+                          <div class="item">
+                              <a href="{% url 'topic_detail' product.id %}">
+                              <div class="orb-card">
+
+                                <img src="{{ product.ProductImage1.url }}" alt="{{ product.ProductName }}">
+
+                                <div class="orb"></div>
+
+                                <div class="orb-content">
+                                  <h4>{{ product.ProductName }}</h4>
+                                  <p>{{ product.CategoryId.CategoryName }}</p>
+
+                                  <a href="{% url 'checkout' %}?buy_now={{ product.id }}">
+                                    Buy Now
+                                  </a>
+                                </div>
+
+                              </div>
+                            </div>
+                            {% endfor %}
+                            </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    <div class="container">
+    <!-- Main Container -->
+
+        <!-- Header -->
+
+        <div class="top-bar">
+                    <div class="section-header-small">
+                        <div class="small-logo">
+                            <img style="height:40px; width:45px;" src="{% static 'images/logo2-2.png' %}">
+                        </div>
+                        <div class="small-brand">
+                            <h3>InfiniDigital</h3>
+                        </div>
+                    </div>
+                    <form action="{% url 'search' %}" method="GET" class="premium-search">
+                        <div class="search-wrapper">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text"
+                                   name="q"
+                                   placeholder="Search templates, e-books, UI kits..."
+                                   value="{{ request.GET.q }}"
+                                   required>
+                            <kbd class="search-shortcut">/</kbd>
+                        </div>
+                    </form>
+                    <a class="back-btn" href="{% url 'home' %}">← Back to Home</a>
+                </div>
+
+        <!-- Menu Grid -->
+        <div class="menu-grid" id="menuGrid">
+            <a href="{% url 'template' %}" class="menu-item initial-load">
+                <div class="menu-badge">TP</div>
+                <div class="menu-title">Templates</div>
+            </a>
+            <a href="{% url 'ebooks' %}" class="menu-item initial-load">
+                <div class="menu-badge">EB</div>
+                <div class="menu-title">E-Books</div>
+            </a>
+            <a href="{% url 'pdfs' %}" class="menu-item initial-load">
+                <div class="menu-badge">PF</div>
+                <div class="menu-title">PDFs</div>
+            </a>
+            <a href="{% url 'sourcecode' %}" class="menu-item initial-load">
+                <div class="menu-badge">SP</div>
+                <div class="menu-title">Source Code/<br> Projects</div>
+            </a>
+            <a href="{% url 'courses' %}" class="menu-item initial-load">
+                <div class="menu-badge">CT</div>
+                <div class="menu-title">Courses & <br>Tutorials</div>
+            </a>
+        </div>
+
+        <!-- Content Sections -->
+            <div class="gallery-grid">
+                {% for product in products %}
+                <div class="product-card">
+
+                <!-- Image Section -->
+                <a href="{% url 'topic_detail' product.id %}" class="product-image">
+                    {% if product.ProductImage1 %}
+                        <img src="{{ product.ProductImage1.url }}" alt="{{ product.ProductName }}">
+                    {% endif %}
+                    <span class="product-badge">
+                        {{ product.CategoryId.CategoryName }}
+                    </span>
+                </a>
+
+                <!-- Content Section -->
+                <div class="product-content">
+
+                    <h3 class="product-title">
+                        <a href="{% url 'topic_detail' product.id %}">
+                            {{ product.ProductName }}
+                        </a>
+                    </h3>
+
+                    <p class="product-description">
+                        {{ product.ShortDescription }}
+                    </p>
+
+                    <div class="product-footer">
+                        <div class="price">
+                            <span class="old-price">₹{{ product.ProductPrice }}</span>
+                            <span class="new-price">₹{{ product.ProductDiscountPrice }}</span>
+                        </div>
+
+                        <div class="actions">
+                            <button class="btn-cart">
+                                <a href="{% url 'add_to_cart' product.id %}">
+                                    <i class="bi bi-bag"></i>
+                                </a>
+                            </button>
+                            <a href="{% url 'checkout' %}?buy_now={{ product.id }}" class="btn-buy">
+                                Buy Now
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+                {% endfor %}
+        </div>
+{% if query and not products %}
+    <p class="text-center text-muted">
+        No templates found for "{{ query }}"
+    </p>
+{% endif %}
+
+    </div>
+
+        <!-- Footer -->
+        <footer class="footer" id="mainFooter">
+            <p>© 2026 NexaVerse. Crafted with passion. Design by <a href="https://templatemo.com" target="_blank">TemplateMo</a></p>
+        </footer>
+
+<!-- 1️⃣ jQuery (ONLY ONCE) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- 2️⃣ Owl Carousel -->
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+
+
+<!-- 5️⃣ Custom script LAST -->
+<script src="{% static 'js/custom1.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+</body>
+
+</html>

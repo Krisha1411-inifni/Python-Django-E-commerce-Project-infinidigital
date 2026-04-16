@@ -1,0 +1,72 @@
+{% load static %}
+<footer class="footer-neo">
+    <div class="footer-glow"></div>
+
+    <div class="container footer-content">
+
+        <!-- BRAND -->
+        <div class="footer-box">
+            <div class="footer-brand">
+                <img src="{% static 'images/logo2-2.png' %}" alt="">
+                <h4>InfiniDigital</h4>
+            </div>
+
+            <p>
+                Your gateway to premium digital assets — Templates, Courses,
+                and many more to build your future.
+            </p>
+
+            <div class="footer-socials">
+                <a href="https://www.facebook.com/"><i class="bi bi-facebook"></i></a>
+                <a href="https://x.com/"><i class="bi bi-twitter"></i></a>
+                <a href="https://www.instagram.com/?hl=en"><i class="bi bi-instagram"></i></a>
+                <a href="https://in.linkedin.com/"><i class="bi bi-linkedin"></i></a>
+            </div>
+        </div>
+
+        <!-- LINKS -->
+        <div class="footer-box">
+            <h5>Explore</h5>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="/#section_3">How it works</a></li>
+                <li><a href="{% url 'services' %}">Services</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+                <li><a href="{% url 'about_us' %}">About Us</a></li>
+            </ul>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="footer-box">
+            <h5>Contact</h5>
+            <p><a href="tel:3052409671">📞928579890</a></p>
+            <p><a href="mailto:info@company.com">✉ infinidigital31@gmail.com</a></p>
+            <p>📍 Ahmedabad, India</p>
+        </div>
+
+        <!-- NEWSLETTER -->
+        <div class="footer-box">
+            <h5>Categories</h5>
+            <ul>
+                <li><a href="{% url 'template' %}">Templates</a></li>
+                <li><a href="{% url 'ebooks' %}">E-Books</a></li>
+                <li><a href="{% url 'pdfs' %}">PDFs</a></li>
+                <li><a href="{% url 'sourcecode' %}">Projects</a></li>
+                <li><a href="{% url 'courses' %}">Courses & Tutorials</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 InfiniDigital • Built with 💜</p>
+    </div>
+</footer>
+
+<!-- JS -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script src="{% static 'js/jquery.sticky.js' %}"></script>
+<script src="{% static 'js/click-scroll.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
