@@ -757,7 +757,7 @@ def client_signup(request):
 
         if form_type == 'signup':
             username = request.POST.get('username')
-            fname = request.POST.get('')
+            fname = request.POST.get('fname')
             lname = request.POST.get('lname')
             email = request.POST.get('email')
             phone = request.POST.get('phone')
