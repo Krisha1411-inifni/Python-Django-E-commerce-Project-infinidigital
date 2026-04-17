@@ -58,8 +58,7 @@ Password: admin123
 ---
 
 ## 📸 Screenshots
-(Add screenshots here)
-
+![Home Page](screenshots/home.png)
 ---
 
 ## 📌 Note
